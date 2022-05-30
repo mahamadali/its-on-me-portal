@@ -151,6 +151,29 @@ class Merchant extends CI_Model
         return $result;
     }
 
+    public function getCategoryDataByBrandId($brand_id) {
+
+           $this->db->select('categories'); 
+           $this->db->from('merchants');  
+           $this->db->join('categories', 'merchants.categories = categories.id');
+            $this->db->where('merchants.id',$brand_id);
+           $query = $this->db->get();  
+           $categories = $query->row_array(); 
+           $cat = explode(',', $categories['categories']);
+          
+            $this->db->select('categories.id,categories.name');
+            $this->db->from('categories');                
+            $this->db->where_in('categories.id',$cat);
+     
+        $query =$this->db->get();
+           
+        if ($query->num_rows()) {
+            return $query->result_array();
+        } else {
+            return 0;
+        }      
+    }
+
     public function getOne($id) {
         $this->db->where('id', $id);
         $result = $this->db->get($this->table)->row();
