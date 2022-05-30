@@ -48,9 +48,11 @@
                 <thead class="thead-light">
                   <tr>
                     <th>ID</th>
+                    <th>Photo</th>
                     <th>Title</th>
                     <th>Message</th>
                     <th>Province</th>
+                    <th>Created At</th>
                   </tr>
                 </thead>
                 <tbody class="list">

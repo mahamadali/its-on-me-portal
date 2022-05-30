@@ -3,7 +3,7 @@ class PushNotification extends CI_Model
 {
 
      var $table = "push_notifications";  
-    var $select_column = array("id","title","message","province","created_at"); 
+    var $select_column = array("id","title","message","province","link","photo","created_at"); 
      public function __construct()
     {
         parent::__construct();

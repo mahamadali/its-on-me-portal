@@ -35,6 +35,7 @@ class PushNotificationController extends CI_Controller {
   {  
     $sub_array = array();    
     $sub_array[] = $row->id;  
+    $sub_array[] = '<img src='.$row->photo.' style="height:50px;width:50px">'; 
     $sub_array[] = $row->title;  
     $sub_array[] = $row->message;    
     $sub_array[] = $this->push_notification->getProvincesByIds($row->province);
