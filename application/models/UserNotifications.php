@@ -15,5 +15,12 @@ class UserNotifications extends CI_Model
         $query = $this->db->get('user_notifications');
         return $query->result();
     }
+
+    public function userNotificationDetails($userId,$notificationId) {
+        $this->db->where('user_id', $userId);
+        $this->db->where('id', $notificationId);
+        $query = $this->db->get('user_notifications');
+        return $query->result();
+    }
  
 }

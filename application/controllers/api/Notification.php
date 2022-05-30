@@ -31,4 +31,17 @@ class Notification extends REST_Controller {
         $notifications = $this->user_notifications->userNotification($input['user_id']);
         $this->response(['status' => 'success', 'data' => $notifications], REST_Controller::HTTP_OK);
     }
+
+    public function userNotificationDetails_post()
+    {
+        $input = $this->input->post();
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        if(!isset($input['notification_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing Notification ID'], REST_Controller::HTTP_OK);
+        }
+        $notifications = $this->user_notifications->userNotificationDetails($input['user_id'],$input['notification_id']);
+        $this->response(['status' => 'success', 'data' => $notifications], REST_Controller::HTTP_OK);
+    }
 }
