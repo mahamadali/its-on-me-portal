@@ -104,4 +104,16 @@ class Product extends REST_Controller {
         $categories = $this->merchant->fetchBrandsByCat($input['brand_id'],$input['category_id']);
         return $this->response(['status' => 'success', 'data' => $categories], REST_Controller::HTTP_OK);
     }
+
+    public function brandsTopOffers_post() {
+        $input = $this->input->post();
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        if(!isset($input['brand_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing Brand ID'], REST_Controller::HTTP_OK);
+        }
+        $topOffers = $this->merchant->brandsTopOffers($input['brand_id']);
+        return $this->response(['status' => 'success', 'data' => $topOffers], REST_Controller::HTTP_OK);
+    }
  }

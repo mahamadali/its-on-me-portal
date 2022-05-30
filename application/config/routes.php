@@ -332,3 +332,4 @@ $route['api/user-notifications'] = 'api/Notification/userNotifications';
 $route['api/user-notification-details'] = 'api/Notification/userNotificationDetails';
 $route['api/brands-categories'] = 'api/Product/brandCategories';
 $route['api/fetch-brands-by-category'] = 'api/Product/fetchBrandsByCat';
+$route['api/brands-top-offers'] = 'api/Product/brandsTopOffers';

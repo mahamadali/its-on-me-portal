@@ -190,9 +190,20 @@ class Merchant extends CI_Model
             if(!empty($items))
             {
                  return $items;
-            }
-     
-         
+            } 
+    }
+
+    public function brandsTopOffers($brand_id) {
+
+            $this->db->select('*'); 
+            $this->db->where('merchant_id',$brand_id);
+            $this->db->where('is_featured' , '1');
+            $query = $this->db->get('products');
+            $items = $query->result_array();
+            if(!empty($items))
+            {
+                 return $items;
+            } 
     }
 
     public function getOne($id) {
