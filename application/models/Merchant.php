@@ -178,6 +178,22 @@ class Merchant extends CI_Model
          
     }
 
+    public function fetchBrandsByCat($brand_id,$category_id) {
+
+           $this->db->select('*'); 
+            
+            $this->db->where('products.merchant_id',$brand_id);
+            $this->db->where("find_in_set($category_id, products.categories)");
+           $query = $this->db->get('products');
+           $items = $query->result_array();
+            if(!empty($items))
+            {
+                 return $items;
+            }
+     
+         
+    }
+
     public function getOne($id) {
         $this->db->where('id', $id);
         $result = $this->db->get($this->table)->row();
