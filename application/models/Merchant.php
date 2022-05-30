@@ -165,16 +165,17 @@ class Merchant extends CI_Model
                 $this->db->select('categories.id,categories.name');
                 $this->db->from('categories');                
                 $this->db->where_in('categories.id',$cat);
+                 $query =$this->db->get();
+           
            }
+                if ($query->num_rows()) {
+                    return $query->result_array();
+                } else {
+                    return 0;
+                }    
             
      
-        $query =$this->db->get();
-           
-        if ($query->num_rows()) {
-            return $query->result_array();
-        } else {
-            return 0;
-        }      
+         
     }
 
     public function getOne($id) {
