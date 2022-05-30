@@ -192,7 +192,7 @@ class Auth extends REST_Controller {
         ];
         
          if($this->user->updateColumn($data, $input['user_id'])) {
-            $this->response(['status' => 'success', 'message' => 'Info Updated successfully'], REST_Controller::HTTP_OK);
+            $this->response(['status' => 'success', 'message' => 'Profile Info Updated successfully'], REST_Controller::HTTP_OK);
         } else {
             $this->response(['status' => 'failed', 'message' => 'Something went wrong'], REST_Controller::HTTP_OK);
         }
