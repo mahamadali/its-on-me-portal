@@ -32,6 +32,13 @@
                    <input type="text" id="website_link" class="form-control" placeholder="Enter Website link" name="link">
                 </div>
               </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="photo">Photo</label>
+                   <input type="file" id="photo" class="form-control" placeholder="Enter Website link" name="photo"required="">
+                </div>
+              </div>
               <div class="col-lg-12">
                 <div class="form-group">
                   <label class="form-control-label" for="province">Province</label>

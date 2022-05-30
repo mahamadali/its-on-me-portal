@@ -149,6 +149,7 @@ class PushNotification extends CI_Model
                     'title' => $data['title'],
                     'message' => $data['message'],
                     'link' => $data['link'],
+                    'photo' => $data['photo'],
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 $this->insert_data_getid($user_notification_data, 'user_notifications');

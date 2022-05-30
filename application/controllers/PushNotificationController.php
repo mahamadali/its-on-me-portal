@@ -60,6 +60,27 @@ public function create()
 public function store()
 {
  $data = $this->input->post();
+ if(!empty($_FILES['photo']['name'])){ 
+    $filename = time()."_".str_replace(' ','_',$_FILES['photo']['name']);
+    $_FILES['file']['name']     = $filename; 
+    $_FILES['file']['type']     = $_FILES['photo']['type']; 
+    $_FILES['file']['tmp_name'] = $_FILES['photo']['tmp_name']; 
+    $_FILES['file']['error']     = $_FILES['photo']['error']; 
+    $_FILES['file']['size']     = $_FILES['photo']['size']; 
+
+    $uploadPath = 'assets/push_notification_photos/'; 
+    $config['upload_path'] = $uploadPath; 
+    $config['allowed_types'] = '*'; 
+    $this->load->library('upload', $config); 
+    $this->upload->initialize($config); 
+    if($this->upload->do_upload('file')){ 
+      $fileData = $this->upload->data(); 
+      $uploadData = "assets/push_notification_photos/".$filename; 
+    }else{  
+      $errorUploadType .= $_FILES['file']['name'].' | ';  
+    }
+  }
+  $data['photo'] = $uploadData;
  $this->push_notification->send($data);
  $this->session->set_flashdata('success', 'Notification created successfully!');
  redirect('push-notifications');
