@@ -160,10 +160,13 @@ class Merchant extends CI_Model
            $query = $this->db->get();  
            $categories = $query->row_array(); 
            $cat = explode(',', $categories['categories']);
-          
-            $this->db->select('categories.id,categories.name');
-            $this->db->from('categories');                
-            $this->db->where_in('categories.id',$cat);
+           if(!empty($cat))
+           {
+                $this->db->select('categories.id,categories.name');
+                $this->db->from('categories');                
+                $this->db->where_in('categories.id',$cat);
+           }
+            
      
         $query =$this->db->get();
            
