@@ -167,5 +167,25 @@ class Auth extends REST_Controller {
         }
         
     }
+
+
+    public function editProfile_post()
+    {
+        $input = $this->input->post();
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        $data = [
+            'first_name' => $input['firstname'],
+            'last_name' => $input['surname'],
+            'phone' => $input['phoneNumber'],
+        ];
+        
+         if($this->user->updateColumn($data, $input['user_id'])) {
+            $this->response(['status' => 'success', 'message' => 'Info Updated successfully'], REST_Controller::HTTP_OK);
+        } else {
+            $this->response(['status' => 'failed', 'message' => 'Something went wrong'], REST_Controller::HTTP_OK);
+        }
+    }
     	
 }
