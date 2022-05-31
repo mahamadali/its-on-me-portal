@@ -80,7 +80,7 @@
                       <?php echo $item->product_name ?>
                     </td>
                      <td class="price">
-                      $<?php echo $item->product_price ?>
+                      R<?php echo $item->product_price ?>
                     </td>
                     <td class="price">
                       <?php echo $item->apply_featured ?>
