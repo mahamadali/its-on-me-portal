@@ -36,9 +36,8 @@ public function store_cat()
 {
 
   $catData['name'] = $this->input->post('name');
-  $catData['has_multiple_color'] = $this->input->post('has_multiple_color');
   $catData['created_at'] = date('Y-m-d H:i:s');
-  $product_id = $this->Product_categories_model->insert_data_getid($catData,'product_categories');
+  $product_id = $this->Product_categories_model->insert_data_getid($catData,'categories');
 
   if (!empty($product_id)) {
       $this->session->set_flashdata('success', 'Category Added successfully!');
@@ -53,7 +52,7 @@ redirect('product-categories');
 
 public function delete_cat($id)
 {
-  $cat_id = $this->Product_categories_model->delete_data('product_categories','id',$id);
+  $cat_id = $this->Product_categories_model->delete_data('categories','id',$id);
 
   if(!empty($cat_id)) {
     $this->session->set_flashdata('success', 'Category deleted successfully!');
@@ -75,7 +74,6 @@ public function update_cat()
 {
     $catData['name'] = $this->input->post('name');
     $cat_id = $this->input->post('cat_id');
-    $catData['has_multiple_color'] = $this->input->post('has_multiple_color');
     $catData['updated_at'] = date('Y-m-d H:i:s');
      unset($catData['cat_id']);
 

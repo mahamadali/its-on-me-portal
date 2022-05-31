@@ -223,6 +223,10 @@ class Merchant extends CI_Model
             {
                  return $items;
             } 
+            else
+            {
+                return array();
+            }
     }
 
      public function searchBrandProduct($search_text,$brand_id) {
@@ -237,6 +241,10 @@ class Merchant extends CI_Model
             {
                  return $items;
             } 
+             else
+            {
+                return array();
+            }
     }
  
 }
