@@ -71,7 +71,7 @@
                     </td>
 
                      <td class="voucher_price">
-                      <?php echo $voucher->voucher_price ?>
+                      R<?php echo $voucher->voucher_price ?>
                     </td>
 
                     <td class="voucher_status">
