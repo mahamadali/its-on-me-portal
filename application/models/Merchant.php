@@ -190,19 +190,28 @@ class Merchant extends CI_Model
             if(!empty($items))
             {
                  return $items;
-            } 
+            }
+            else
+            {
+                return array();
+            }
     }
 
     public function brandsTopOffers($brand_id) {
 
-            $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image');
+            $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address');
             $this->db->where('merchant_id',$brand_id);
             $this->db->where('is_featured' , '1');
+            $this->db->join('merchants', 'merchants.id = products.merchant_id');
             $query = $this->db->get('products');
             $items = $query->result_array();
             if(!empty($items))
             {
                  return $items;
+            }
+            else
+            {
+                return array();
             } 
     }
 
