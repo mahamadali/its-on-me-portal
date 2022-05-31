@@ -138,7 +138,7 @@ class Product extends REST_Controller {
         if(!isset($input['brand_id'])) {
          return $this->response(['status' => 'failed', 'message' => 'Missing Brand ID'], REST_Controller::HTTP_OK);
         }
-        if(!isset($input['search_text']) || empty($input['search_text'])) {
+        if(!isset($input['search_text'])) {
          return $this->response(['status' => 'failed', 'message' => 'Missing Search Text'], REST_Controller::HTTP_OK);
         }
         $productList = $this->merchant->searchBrandProduct($input['search_text'],$input['brand_id']);
