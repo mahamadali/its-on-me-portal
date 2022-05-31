@@ -334,3 +334,4 @@ $route['api/brands-categories'] = 'api/Product/brandCategories';
 $route['api/fetch-brands-by-category'] = 'api/Product/fetchBrandsByCat';
 $route['api/brands-top-offers'] = 'api/Product/brandsTopOffers';
 $route['api/edit-info'] = 'api/Auth/editProfile';
+$route['api/user-info'] = 'api/Auth/userProfileInfo';

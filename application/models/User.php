@@ -112,4 +112,14 @@ class User extends CI_Model
             $this->insert_data_getid($data, 'user_device_tokens');
         }
     }
+
+    function get_user_profile_data($id)  
+      {  
+           $this->db->select("first_name,last_name,email,username,phone,dob,province");  
+           $this->db->from($this->table);
+            $this->db->where('id', $id);
+           $query = $this->db->get();  
+           return $query->row_array();    
+      }
+
 }

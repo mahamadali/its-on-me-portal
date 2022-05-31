@@ -197,5 +197,18 @@ class Auth extends REST_Controller {
             $this->response(['status' => 'failed', 'message' => 'Something went wrong'], REST_Controller::HTTP_OK);
         }
     }
+
+    public function userProfileInfo_post()
+    {
+        $input = $this->input->post();
+      
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        $ProfileData = $this->user->get_user_profile_data($input['user_id']);
+
+            $this->response(['status' => 'success', 'data' => $ProfileData], REST_Controller::HTTP_OK);
+    
+    }
     	
 }
