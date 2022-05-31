@@ -211,5 +211,18 @@ class Merchant extends CI_Model
         $result = $this->db->get($this->table)->row();
         return $result;
     }
+
+    public function searchProduct($search_text) {
+
+            $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image');
+            $this->db->like('product_name',$search_text);
+            $query = $this->db->get('products');
+            //print_r($this->db->last_query());exit();
+            $items = $query->result_array();
+            if(!empty($items))
+            {
+                 return $items;
+            } 
+    }
  
 }

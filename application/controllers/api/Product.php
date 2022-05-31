@@ -115,5 +115,18 @@ class Product extends REST_Controller {
         }
         $topOffers = $this->merchant->brandsTopOffers($input['brand_id']);
         return $this->response(['status' => 'success', 'data' => $topOffers], REST_Controller::HTTP_OK);
+    } 
+
+
+     public function searchProductByText_post() {
+        $input = $this->input->post();
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        if(!isset($input['search_text'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing Search Text'], REST_Controller::HTTP_OK);
+        }
+        $productList = $this->merchant->searchProduct($input['search_text']);
+        return $this->response(['status' => 'success', 'data' => $productList], REST_Controller::HTTP_OK);
     }
  }
