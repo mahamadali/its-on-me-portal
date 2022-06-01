@@ -54,58 +54,6 @@ class General extends REST_Controller {
         $paymentData = $this->generatePaymentLink($data); 
 
         $id = $this->user->insert_data_getid($data, 'transactions');
-
-        $checkUserExist = $this->user->check_user_exist($input['user_id']);
-        if($checkUserExist == 1)
-        {
-
-              $this->email->from('info@itsonme.co.za', 'ITSONME');
-              $this->email->to($input['email']);
-              $this->email->subject('Transaction Gift Code - ITSONME');
-              $message = "Hey ".$input['full_name']." your order is on me. Your its on me CODE is ". $code ."";
-              $message .= "<p>Thanks,</p>";
-              $message .= "<p>ITSONME Team<br></p>";
-              $this->email->message($message);
-              $this->email->set_mailtype('html');
-              $this->email->set_newline("\r\n");
-              $this->email->send();
-         
-             $getUserTokens = $this->user->getTokens($input['user_id']);
-            if(!empty($getUserTokens))
-            {
-               $message = "Hey ".$input['full_name']." your order is on me. Your its on me CODE is ". $code ."";
-               $title = "Transaction gift code";
-               $link = '';
-               foreach ($getUserTokens as $key => $token) {
-                     $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);
-                     $user_notification_data = [
-                    'user_id' => $input['user_id'],
-                    'title' => $title,
-                    'message' => $message,
-                    'link' => '',
-                    'created_at' => date('Y-m-d H:i:s'),
-                   ];
-                   $this->user->insert_data_getid($user_notification_data, 'user_notifications');
-                  }   
-            }
-
-        }
-        else
-        {
-              $this->email->from('info@itsonme.co.za', 'ITSONME');
-              $this->email->to($input['email']);
-              $this->email->subject('Transaction Gift Code - ITSONME');
-              $message = "Hey ".$input['full_name']." your order is on me. Download app to get code";
-              $message .= "<p>Thanks,</p>";
-              $message .= "<p>ITSONME Team<br></p>";
-              $this->email->message($message);
-              $this->email->set_mailtype('html');
-              $this->email->set_newline("\r\n");
-              $this->email->send();
-        }
-
-        
-
          
         if($id) {
             $this->response([
@@ -177,5 +125,70 @@ class General extends REST_Controller {
         $response = json_decode($response);
 
         return $response;
+    }
+
+    public function ozowSuccess_get()
+    {
+        $input = $this->input->get(); 
+        $code = $input['TransactionReference'];
+        $transaction = $this->db->where('code', $code)->get('transactions')->row_array();
+         
+          $data = array(
+            'sitecode' => $input['SiteCode'],
+            'status' => 'COMPLETED'
+          );  
+        $checkUserExist = $this->user->check_user_exist($input['Optional1']);
+        if($checkUserExist == 1)
+        {
+              $this->email->from('info@itsonme.co.za', 'ITSONME');
+              $this->email->to($transaction['email']);
+              $this->email->subject('Transaction Gift Code - ITSONME');
+              $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+              $message .= "<p>Thanks,</p>";
+              $message .= "<p>ITSONME Team<br></p>";
+              $this->email->message($message);
+              $this->email->set_mailtype('html');
+              $this->email->set_newline("\r\n");
+              $this->email->send();
+         
+             $getUserTokens = $this->user->getTokens($input['Optional1']);
+
+            if(!empty($getUserTokens))
+            {
+               $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+               $title = "Transaction gift code";
+               $link = '';
+               foreach ($getUserTokens as $key => $token) {
+                     $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);     
+                }
+                $user_notification_data = [
+                'user_id' => $input['Optional1'],
+                'title' => $title,
+                'message' => $message,
+                'link' => '',
+                'created_at' => date('Y-m-d H:i:s'),
+               ];
+               $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+            }
+
+        }
+        else
+        {
+              $this->email->from('info@itsonme.co.za', 'ITSONME');
+              $this->email->to($transaction['email']);
+              $this->email->subject('Transaction Gift Code - ITSONME');
+              $message = "Hey ".$transaction['full_name']." your order is on me. Download app to get code";
+              $message .= "<p>Thanks,</p>";
+              $message .= "<p>ITSONME Team<br></p>";
+              $this->email->message($message);
+              $this->email->set_mailtype('html');
+              $this->email->set_newline("\r\n");
+              $this->email->send();
+        }
+
+        $this->db->where('id', $transaction['id'])->update('transactions', $data);
+
+         $this->response(['status' => 'success', 'Transaction ID' => $input['TransactionId']], REST_Controller::HTTP_OK);
+
     }
 }
