@@ -28,7 +28,7 @@
                 </div>
               <div class="col-4">
                  <input type="submit" class="btn btn-primary my-4" value="CHECK CODE">
-                  <a href="<?php echo base_url('vouchers') ?>" class="btn btn-info pull-right">Cancel</a>
+                  <a href="<?php echo base_url('merchant/reedem') ?>" class="btn btn-info pull-right">Cancel</a>
                 </div>
               </form>
             </div>
