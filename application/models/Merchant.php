@@ -258,10 +258,11 @@ class Merchant extends CI_Model
 
      public function ProductDetails($product_id,$brand_id) {
 
-            $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address , `merchants.province` as province');
+            $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address , `merchants.province` as province,provinces.name as province_name');
             $this->db->where('merchant_id',$brand_id);
             $this->db->where('products.id',$product_id);
             $this->db->join('merchants', 'merchants.id = products.merchant_id');
+            $this->db->join('provinces', 'provinces.id = merchants.province');
             $query = $this->db->get('products');
             $items = $query->result_array();
             if(!empty($items))
