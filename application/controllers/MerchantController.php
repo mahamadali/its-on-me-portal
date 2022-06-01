@@ -115,6 +115,7 @@ public function get_merchants()
     $sub_array[] = '<img src='.$row->profile_picture.' style="height:50px;width:50px">';  
     $sub_array[] = $row->username;  
     $sub_array[] = $row->email;    
+    $sub_array[] = "R".$this->merchant->monthlyPayment($row->id);
     if($row->status == 0) {
       $sub_array[] = 'Suspend';
     } else if($row->status == 1) {
@@ -127,6 +128,7 @@ public function get_merchants()
     <a href="'.base_url().'merchants/edit/'.$row->id.'" class="btn btn-sm btn-info">Edit</a>
     <a href="'.base_url().'merchants/delete/'.$row->id.'" class="btn btn-sm btn-danger">Delete</a>
     <a href="'.base_url().'merchants/list-bank/'.$row->id.'" class="btn btn-sm btn-warning"><i class="fa fa-plus"></i> Bank</a>
+    <a href="'.base_url().'merchants/transactions/'.$row->id.'" class="btn btn-sm btn-primary"><i class="fa fa-money"></i> Transactions</a>
     ';
   } else if($row->status == 1) {
     $actionBtn = '
@@ -134,6 +136,7 @@ public function get_merchants()
     <a href="'.base_url().'merchants/edit/'.$row->id.'" class="btn btn-sm btn-info">Edit</a>
     <a href="'.base_url().'merchants/delete/'.$row->id.'" class="btn btn-sm btn-danger">Delete</a>
     <a href="'.base_url().'merchants/list-bank/'.$row->id.'" class="btn btn-sm btn-warning"><i class="fa fa-plus"></i> Bank</a>
+    <a href="'.base_url().'merchants/transactions/'.$row->id.'" class="btn btn-sm btn-primary"><i class="fa fa-money"></i> Transactions</a>
     ';
   }
   $sub_array[] = $actionBtn;
@@ -372,6 +375,42 @@ public function delete_bank($id,$merchant_id){
 } 
 
    /*After Merchant Login Functions*/
+
+   public function transactions($id) {
+      $this->data['merchant_id'] = $id;
+      $this->data['merchant'] = $this->merchant->getOne($id);
+      $this->data['page'] = "merchant/transactions";
+      $this->data['footer'] = $this->load->view('footer',$this->data,true);
+      $this->load->view('structure',$this->data);
+   }
+
+   public function get_transactions($id) {
+      
+      $fetch_data = $this->merchant->make_datatables_transactions($id);  
+      $data = array();  
+      foreach($fetch_data as $row)  
+      {  
+        $sub_array = array();    
+        $sub_array[] = $row->id;  
+        $sub_array[] = $row->user_fullname;  
+        $sub_array[] = $row->full_name;    
+        $sub_array[] = $row->email;    
+        $sub_array[] = $row->phone_number;    
+        $sub_array[] = "R".$row->price;
+        $sub_array[] = $row->date_to_send;
+        $sub_array[] = $row->created_at;
+        $sub_array[] = $row->status;
+        
+        $data[] = $sub_array;  
+    }  
+    $output = array(  
+      "draw"                    =>     intval($_POST["draw"]),  
+      "recordsTotal"          =>      $this->merchant->get_all_data_transactions($id),  
+      "recordsFiltered"     =>     $this->merchant->get_filtered_data_transactions($id),  
+      "data"                    =>     $data  
+    );  
+    echo json_encode($output);  
+   }
 
 
 }

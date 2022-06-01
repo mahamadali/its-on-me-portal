@@ -3,6 +3,7 @@ class Merchant extends CI_Model
 {
 
      var $table = "merchants";  
+     var $transaction_table = "transactions";  
     var $select_column = array("id","username","email","password","bio","profile_picture","physical_address","categories","status","created_at","updated_at"); 
      public function __construct()
     {
@@ -274,5 +275,74 @@ class Merchant extends CI_Model
                 return array();
             }
     }
+
+    public function monthlyPayment($id) {
+        $sql = "SELECT SUM(`price`) AS grand FROM transactions WHERE MONTH(`created_at`)=MONTH( CURRENT_DATE ) AND merchant_id=".$id;
+        $query = $this->db->query($sql);
+        if($query->num_rows() > 0) {
+            return $query->row('grand') ? $query->row('grand') : 0.00;    
+        }
+    }
+
+    public function getTransactionsByMerchant($id) {
+        $this->db->select('transactions.*, CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');
+        $this->db->where('merchant_id', $id);
+        $this->db->where('transactions.status !=', 'PENDING');
+        $this->db->join('users', 'users.id = transactions.user_id');
+        $query = $this->db->get('transactions');
+        if($query->num_rows() > 0) {
+            return $query->result();
+        }
+    }
+
+    function make_query_transactions($id)  
+      {  
+           $this->db->select('transactions.*, CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');  
+           $this->db->where('merchant_id', $id);
+            $this->db->where('transactions.status !=', 'PENDING');
+            $this->db->join('users', 'users.id = transactions.user_id');
+           $this->db->from($this->transaction_table);  
+           if(isset($_POST["search"]["value"]))  
+           {  
+                $this->db->like("transaction_id", $_POST["search"]["value"]);  
+                $this->db->or_like("users.first_name", $_POST["search"]["value"]);  
+                $this->db->or_like("transactions.full_name", $_POST["search"]["value"]);  
+                $this->db->or_like("transactions.email", $_POST["search"]["value"]);  
+                $this->db->or_like("transactions.phone_number", $_POST["search"]["value"]);  
+           }  
+           if(isset($_POST["order"]))  
+           {  
+                $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+           }  
+           else  
+           {  
+                $this->db->order_by('id', 'DESC');  
+           }  
+      }  
+      function make_datatables_transactions($id){  
+           $this->make_query_transactions($id);  
+           if($_POST["length"] != -1)  
+           {  
+                $this->db->limit($_POST['length'], $_POST['start']);  
+           }  
+           $query = $this->db->get();
+           return $query->result();  
+      }  
+      function get_filtered_data_transactions($id){  
+           $this->make_query_transactions($id);  
+           $query = $this->db->get();  
+           return $query->num_rows();  
+      }       
+      function get_all_data_transactions($id)  
+      {  
+           $this->db->select("transactions.*");
+           $this->db->where('merchant_id', $id);
+            $this->db->where('transactions.status !=', 'PENDING');
+            $this->db->join('users', 'users.id = transactions.user_id');
+           $this->db->from($this->transaction_table);
+           $this->db->order_by('id', 'DESC');   
+           $query = $this->db->get();  
+           return $query->result();    
+      }
  
 }

@@ -89,6 +89,20 @@
       },  
     });
 
+    var fetchTransactionEnable = '<?php echo isset($merchant_id) ? $merchant_id : "" ?>';
+    if(fetchTransactionEnable != '') {
+      var transactions_datatable = $('#merchant-transactions').DataTable({  
+        "processing":true,  
+        "serverSide":true,  
+        "order":[],  
+        "ajax":{  
+             url:"<?php echo base_url(); ?>merchants/transactions/ajax_list/"+fetchTransactionEnable,
+             type:"POST"  
+        },  
+      });  
+    }
+    
+
     /*const datatablesSimple = document.getElementById('merchant-bank-list');
     if (datatablesSimple) {
      new simpleDatatables.DataTable(datatablesSimple, {

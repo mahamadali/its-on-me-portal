@@ -1,10 +1,3 @@
-<style type="text/css">
-.text-black
-{
-  color:black;
-}
-</style>
-<!-- Header -->
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
     <div class="header-body">
@@ -13,14 +6,10 @@
           <!-- <h6 class="h2 text-white d-inline-block mb-0">Products</h6> -->
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item active"><a href="#"><i class="fas fa-home"></i></a>&nbsp;All Merchants</li>
+              <li class="breadcrumb-item active"><a href="<?php echo base_url('merchants') ?>"><i class="fas fa-arrow-left"></i></a>&nbsp;<?php echo ucfirst($merchant->username) ?> Transactions</li>
             </ol>
           </nav>
         </div>
-           <!--  <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
-            </div> -->
           </div>
         </div>
       </div>
@@ -34,25 +23,24 @@
             <div class="card-header">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Merchants </h3>
-                </div>
-                  <span id="status" class="pull-right btn btn-primary" style="display:none;"></span>
-                <div class="col-4 text-right">
-                  <a href="<?php echo base_url('merchants/create') ?>" class="btn btn-sm btn-primary">Create merchant account</a>
+                  <h3 class="mb-0">Transactions </h3>
                 </div>
               </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush" id="merchant-list">
+              <table class="table align-items-center table-flush" id="merchant-transactions">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort">Profile Picture</th>
-                    <th scope="col" class="sort">Username</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">This Month Payment</th>
+                    <th scope="col" class="sort">#</th>
+                    <th scope="col" class="sort">User</th>
+                    <th scope="col">Receiver Name</th>
+                    <th scope="col">Receiver Email</th>
+                    <th scope="col">Receiver CellNumber</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Created</th>
                     <th scope="col" class="sort">Status</th>
-                    <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
