@@ -144,4 +144,19 @@ class Product extends REST_Controller {
         $productList = $this->merchant->searchBrandProduct($input['search_text'],$input['brand_id']);
         return $this->response(['status' => 'success', 'data' => $productList], REST_Controller::HTTP_OK);
     }
+
+     public function productDetails_post() {
+        $input = $this->input->post();
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        if(!isset($input['brand_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing Brand ID'], REST_Controller::HTTP_OK);
+        }
+        if(!isset($input['product_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing Product ID'], REST_Controller::HTTP_OK);
+        }
+        $productDetail = $this->merchant->ProductDetails($input['product_id'],$input['brand_id']);
+        return $this->response(['status' => 'success', 'data' => $productDetail], REST_Controller::HTTP_OK);
+    }
  }
