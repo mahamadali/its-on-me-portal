@@ -210,5 +210,27 @@ class Auth extends REST_Controller {
             $this->response(['status' => 'success', 'data' => $ProfileData], REST_Controller::HTTP_OK);
     
     }
+
+     public function userInquiries_post()
+    {
+        $input = $this->input->post();
+      
+        if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+        $Inquiries = [
+            'user_id' => $input['user_id'],
+            'full_name' => $input['full_name'],
+            'email' => $input['email'],
+            'subject' => $input['subject'],
+            'message' => $input['message'],
+        ];
+        $id = $this->user->insert_data_getid($Inquiries, 'inquiries');
+        if($id) {
+            $this->response(['status' => 'success', 'message' => 'Inquiry submitted successfully'], REST_Controller::HTTP_OK);
+        } else {
+            $this->response(['status' => 'failed', 'message' => 'Incorrect login credentials!'], REST_Controller::HTTP_OK);
+        }
+    }
     	
 }

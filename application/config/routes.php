@@ -339,3 +339,4 @@ $route['api/user-info'] = 'api/Auth/userProfileInfo';
 $route['api/product-search'] = 'api/Product/searchProductByText';
 $route['api/brand-product-search'] = 'api/Product/searchBrandProductByText';
 $route['api/transaction'] = 'api/General/userTransaction';
+$route['api/inquiries'] = 'api/Auth/userInquiries';
