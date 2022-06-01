@@ -115,7 +115,7 @@ class User extends CI_Model
 
     function get_user_profile_data($id)  
       {  
-           $this->db->select("first_name,last_name,email,username,phone,dob,province");  
+           $this->db->select("id,first_name,last_name,email,username,phone,dob,province");  
            $this->db->from($this->table);
             $this->db->where('id', $id);
            $query = $this->db->get();  

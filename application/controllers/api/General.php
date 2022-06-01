@@ -49,6 +49,10 @@ class General extends REST_Controller {
             'quantity' => $input['quantity'],
             'code' => $code,
         ];
+
+        // Generate Payment Link
+        $paymentData = $this->generatePaymentLink($data); 
+
         $id = $this->user->insert_data_getid($data, 'transactions');
 
         $checkUserExist = $this->user->check_user_exist($input['user_id']);
@@ -98,13 +102,80 @@ class General extends REST_Controller {
               $this->email->set_mailtype('html');
               $this->email->set_newline("\r\n");
               $this->email->send();
-        } 
+        }
+
+        
 
          
         if($id) {
-            $this->response(['status' => 'success', 'message' => 'Transaction created successfully'], REST_Controller::HTTP_OK);
+            $this->response([
+                'status' => 'success', 
+                'message' => 'Transaction created successfully',
+                'paymentRequestId' => $paymentData->paymentRequestId,
+                'url' => $paymentData->url
+            ], REST_Controller::HTTP_OK);
         } else {
-            $this->response(['status' => 'failed', 'message' => 'Incorrect login credentials!'], REST_Controller::HTTP_OK);
+            $this->response(['status' => 'failed', 'message' => 'Transaction failed!'], REST_Controller::HTTP_OK);
         }
+    }
+
+    public function generatePaymentLink($data) {
+
+        $user = $this->user->get_user_profile_data($data['user_id']);
+        $jsonData = '{ 
+            "SiteCode": "TSTSTE0001", 
+            "CountryCode": "ZA",
+            "CurrencyCode": "ZAR",
+            "Amount": '.$data["price"].',
+            "TransactionReference": "'.$data["code"].'",
+            "BankReference": "'.$data["code"].'",
+            "Optional1": "'.$data["user_id"].'",
+            "Customer": "'.$user["first_name"].'",
+            "CancelUrl": "https://itsonme.co.za/its-on-me-portal/ozow-cancel",
+            "ErrorUrl": "https://itsonme.co.za/its-on-me-portal/ozow-error",
+            "SuccessUrl": "https://itsonme.co.za/its-on-me-portal/ozow-success",
+            "NotifyUrl": "https://itsonme.co.za/its-on-me-portal/ozow-notify",
+            "IsTest": "true"
+        }';
+
+        $jsonArray = json_decode($jsonData);
+
+        $string = '';
+        foreach ($jsonArray as $key => $value) {
+            $string .= $value;
+        }
+        $string = $string."215114531AFF7134A94C88CEEA48E";
+        $string = strtolower($string);
+        $hashed = hash("sha512", $string);
+
+        $jsonArray->HashCheck = $hashed;
+
+        $jsonPostData = json_encode($jsonArray);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://api.ozow.com/PostPaymentRequest?ApiKey=EB5758F2C3B4DF3FF4F2669D5FF5B',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => $jsonPostData,
+          CURLOPT_HTTPHEADER => array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            'ApiKey: EB5758F2C3B4DF3FF4F2669D5FF5B'
+          ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $response = json_decode($response);
+
+        return $response;
     }
 }
