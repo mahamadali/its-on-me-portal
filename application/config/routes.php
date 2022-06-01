@@ -260,6 +260,15 @@ $route['merchant/products/update_item'] = 'MerchantProductController/update_prod
 
 /*Merchant Products Routes*/
 
+/*Reedem Vouchers*/
+
+$route['merchant/reedem'] = 'MerchantProductController/reedem_voucher';
+$route['merchant/check_code'] = 'MerchantProductController/check_reedem_voucher';
+$route['merchant/reedem_code_success/(:any)'] = 'MerchantProductController/update_reedem_code/$1';
+
+/*Reedem Vouchers*/
+
+
 /*Merchant ROUTES*/
 
 
@@ -312,6 +321,9 @@ $route['voucher/edit/(:any)'] = 'VoucherController/edit/$1';
 $route['voucher/update'] = 'VoucherController/update';
 
 /*Vouchers Routes*/
+
+
+
 
 /*API ROUTES*/
 $route['api/login'] = 'api/Auth/login';

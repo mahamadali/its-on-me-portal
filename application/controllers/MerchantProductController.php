@@ -11,6 +11,7 @@ class MerchantProductController extends CI_Controller {
         $this->data['footer'] = $this->load->view('footer',$this->data,true);
         $this->load->model('Merchant_Product_model', 'merchant_product');
         $this->load->model('Merchant', 'merchant');
+        $this->load->model('Voucher_model', 'voucher');
         $this->load->helper('form');
         $this->load->helper('general');
     }
@@ -172,6 +173,56 @@ redirect('merchant/products');
 }  
     redirect('merchant/products');
 
+ }
+
+ public function reedem_voucher()
+ {
+    $this->data['page'] = "merchant/reedem_index";
+    $this->load->view('structure',$this->data); 
+ }
+
+ public function check_reedem_voucher()
+ {
+    $VoucherCode = $this->input->post('voucher_code');
+    $CheckVoucherCode = $this->voucher->checkVoucherCode($VoucherCode);
+     if(!empty($CheckVoucherCode))
+     {
+          if($CheckVoucherCode->is_redeemed == 0)
+          {
+             $GetProductItems = $this->voucher->getProductsByCode($VoucherCode);
+             $this->data['user_id'] =  $CheckVoucherCode->id ;
+             $this->data['GetProductItems'] = json_decode($GetProductItems);
+             $this->data['page'] = "merchant/reedem_index";
+              $this->load->view('structure',$this->data); 
+          }
+          else
+          {
+             $this->session->set_flashdata('warning', 'Voucher Code Already Used');
+             redirect('merchant/reedem');
+          }
+     }
+     else
+     {
+       $this->session->set_flashdata('warning', 'Invalid Voucher Code!');
+       redirect('merchant/reedem');
+     }
+
+     
+ }
+
+ public function update_reedem_code($id)
+ {
+       $Voucherdata = array('is_redeemed'=> 1);
+       $update_voucher_id = $this->voucher->update_voucher_reedem($id,$Voucherdata);
+
+    if (!empty($update_voucher_id)) {
+        $this->session->set_flashdata('success', 'Voucher reedem successfully!');
+     
+    }else{
+    $this->session->set_flashdata('error', 'Something Wrong!');
+
+}  
+    redirect('merchant/reedem');
  }
 
 }

@@ -136,6 +136,41 @@ class Voucher_model extends CI_Model
           return $query->row(); 
       } 
 
-     
+      function checkVoucherCode($code)  
+      {  
+          $this->db->where('code', $code);
+          $query = $this->db->get('transactions');
+          if($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return $query->num_rows();
+        } 
+      } 
+
+       function getProductsByCode($code)  
+      {  
+          $this->db->select('menu_items');
+          $this->db->where('code', $code);
+          $query = $this->db->get('transactions');
+          return $query->row()->menu_items; 
+      } 
+
+         function getProName($id)
+        {       
+        
+           if (empty($id)) {
+            return 'N/A';
+           }
+            $this->db->select('product_name');
+            $this->db->where('id', $id);
+            $query = $this->db->get('products');
+            return $query->row();
+        }
+        
+        function update_voucher_reedem($id,$data) {
+          $this->db->where('id', $id);
+          $que = $this->db->update('transactions', $data);
+          return $que;
+    } 
  
 }

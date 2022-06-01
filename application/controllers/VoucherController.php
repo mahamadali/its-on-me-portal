@@ -16,10 +16,10 @@ class VoucherController extends CI_Controller {
   public function index()
   {      
    
-    if(!$this->session->userdata('admin'))
-   {
-     redirect('/');
-   }
+    if(!$this->session->userdata('merchant'))
+       {
+           redirect('merchant/login');
+       }
 
 
    $this->data['AllVouchers'] = $this->voucher->get_all_data();
@@ -142,6 +142,8 @@ public function delete($id){
 
   redirect('vouchers');
 }
+
+ 
 
 
 }
