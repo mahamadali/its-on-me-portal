@@ -201,7 +201,7 @@ class User extends CI_Model
         if ($result === FALSE) {
             die('Oops! FCM Send Error: ' . curl_error($ch));
         }
-
+        
         curl_close($ch);
 
         return $result;
