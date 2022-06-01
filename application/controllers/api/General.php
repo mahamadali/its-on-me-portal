@@ -37,6 +37,7 @@ class General extends REST_Controller {
          }
          $code = $this->user->generateRandomString(6);
          $data = [
+            'merchant_id' => $input['merchant_id'],
             'user_id' => $input['user_id'],
             'full_name' => $input['full_name'],
             'email' => $input['email'],
@@ -79,10 +80,10 @@ class General extends REST_Controller {
             "BankReference": "'.$data["code"].'",
             "Optional1": "'.$data["user_id"].'",
             "Customer": "'.$user["first_name"].'",
-            "CancelUrl": "https://itsonme.co.za/its-on-me-portal/ozow-cancel",
-            "ErrorUrl": "https://itsonme.co.za/its-on-me-portal/ozow-error",
-            "SuccessUrl": "https://itsonme.co.za/its-on-me-portal/ozow-success",
-            "NotifyUrl": "https://itsonme.co.za/its-on-me-portal/ozow-notify",
+            "CancelUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-cancel",
+            "ErrorUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-error",
+            "SuccessUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-success",
+            "NotifyUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-notify",
             "IsTest": "true"
         }';
 
@@ -133,10 +134,12 @@ class General extends REST_Controller {
         $code = $input['TransactionReference'];
         $transaction = $this->db->where('code', $code)->get('transactions')->row_array();
          
-          $data = array(
+        $data = array(
             'sitecode' => $input['SiteCode'],
+            'transaction_id' => $input['TransactionId'],
             'status' => 'COMPLETED'
-          );  
+        );
+
         $checkUserExist = $this->user->check_user_exist($input['Optional1']);
         if($checkUserExist == 1)
         {
@@ -188,7 +191,55 @@ class General extends REST_Controller {
 
         $this->db->where('id', $transaction['id'])->update('transactions', $data);
 
-         $this->response(['status' => 'success', 'Transaction ID' => $input['TransactionId']], REST_Controller::HTTP_OK);
+        return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
 
+    }
+
+    public function ozowCancel_get()
+    {
+        $input = $this->input->get(); 
+        $code = $input['TransactionReference'];
+        $transaction = $this->db->where('code', $code)->get('transactions')->row_array();
+         
+        $data = array(
+            'sitecode' => $input['SiteCode'],
+            'transaction_id' => $input['TransactionId'],
+            'status' => 'CANCELLED'
+        );
+        $this->db->where('id', $transaction['id'])->update('transactions', $data);
+
+        return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
+    }
+
+    public function ozowError_get()
+    {
+        $input = $this->input->get(); 
+        $code = $input['TransactionReference'];
+        $transaction = $this->db->where('code', $code)->get('transactions')->row_array();
+         
+        $data = array(
+            'sitecode' => $input['SiteCode'],
+            'transaction_id' => $input['TransactionId'],
+            'status' => 'ERROR'
+        );
+        $this->db->where('id', $transaction['id'])->update('transactions', $data);
+
+        return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
+    }
+
+    public function ozowNotify_post()
+    {
+        $input = $this->input->post(); 
+        $code = $input['TransactionReference'];
+        $transaction = $this->db->where('code', $code)->get('transactions')->row_array();
+         
+        $data = array(
+            'sitecode' => $input['SiteCode'],
+            'transaction_id' => $input['TransactionId'],
+            'status' => $input['Status']
+        );
+        $this->db->where('id', $transaction['id'])->update('transactions', $data);
+
+        return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
     }
 }

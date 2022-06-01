@@ -341,3 +341,6 @@ $route['api/brand-product-search'] = 'api/Product/searchBrandProductByText';
 $route['api/transaction'] = 'api/General/userTransaction';
 $route['api/inquiries'] = 'api/Auth/userInquiries';
 $route['api/ozow-success'] = 'api/General/ozowSuccess';
+$route['api/ozow-cancel'] = 'api/General/ozowCancel';
+$route['api/ozow-error'] = 'api/General/ozowError';
+$route['api/ozow-notify'] = 'api/General/ozowNotify';
