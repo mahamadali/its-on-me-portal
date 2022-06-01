@@ -122,4 +122,23 @@ class User extends CI_Model
            return $query->row_array();    
       }
 
+      function generateRandomString($length = 25) {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+     function check_user_exist($id)  
+      {  
+           $this->db->select("*");  
+           $this->db->from($this->table);  
+           $this->db->where('id', $id);
+           $query = $this->db->get(); 
+           return $query->num_rows();        
+      }
+
 }
