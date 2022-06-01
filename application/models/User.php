@@ -141,4 +141,70 @@ class User extends CI_Model
            return $query->num_rows();        
       }
 
+      function getTokens($id)  
+      {  
+           $this->db->select("device_token");  
+           $this->db->from('user_device_tokens');  
+           $this->db->where('user_id', $id);
+           $query = $this->db->get(); 
+            return $query->result_array();      
+      }
+
+      public function sendNotificationUser($token, $title, $message, $link = '') {
+        if(!empty($link)) {
+            $json_data =array(
+            "to" => $token,
+            "notification" =>array(
+              "title" => $title,
+              "body" => $message,
+              "icon" => "https://itsonme.co.za/its-on-me/admin/assets/img/IOM-logo.png",
+              "click_action" => $link
+            ),
+           
+          );    
+        } else {
+            $json_data =array(
+            "to" => $token,
+            "notification" =>array(
+              "title" => $title,
+              "body" => $message,
+              "icon" => "https://itsonme.co.za/its-on-me/admin/assets/img/IOM-logo.png"
+            ),
+           
+          );
+        }
+        
+
+        $data = json_encode($json_data);
+        
+           
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $server_key = 'AAAAA_fuAbU:APA91bHt4xH7WnbyClLld-QvgWpYPnA5fz5bg_5uwneTP78v5iYWRrHbN4g97Vday7C_5izbtXycL_ZRn-535JymMhwVQh16Di9By5EyEx7t7F-s9JguiMaAECr4Tl01xdmfQ4PvDB6Q';
+        
+        $headers = array(
+            'Content-Type:application/json',
+            'Authorization:key='.$server_key
+          );
+
+
+            //CURL request to route notification to FCM connection server (provided by Google)
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        $result = curl_exec($ch);
+
+        if ($result === FALSE) {
+            die('Oops! FCM Send Error: ' . curl_error($ch));
+        }
+
+        curl_close($ch);
+
+        return $result;
+    }
+
 }

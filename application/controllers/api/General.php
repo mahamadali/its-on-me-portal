@@ -57,7 +57,7 @@ class General extends REST_Controller {
 
               $this->email->from('info@itsonme.co.za', 'ITSONME');
               $this->email->to($input['email']);
-              $this->email->subject('Verification Code - ITSONME');
+              $this->email->subject('Transaction Gift Code - ITSONME');
               $message = "Hey ".$input['full_name']." your order is on me. Your its on me CODE is ". $code ."";
               $message .= "<p>Thanks,</p>";
               $message .= "<p>ITSONME Team<br></p>";
@@ -65,12 +65,32 @@ class General extends REST_Controller {
               $this->email->set_mailtype('html');
               $this->email->set_newline("\r\n");
               $this->email->send();
+         
+             $getUserTokens = $this->user->getTokens($input['user_id']);
+            if(!empty($getUserTokens))
+            {
+               $message = "Hey ".$input['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+               $title = "Transaction gift code";
+               $link = '';
+               foreach ($getUserTokens as $key => $token) {
+                     $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);
+                     $user_notification_data = [
+                    'user_id' => $input['user_id'],
+                    'title' => $title,
+                    'message' => $message,
+                    'link' => '',
+                    'created_at' => date('Y-m-d H:i:s'),
+                   ];
+                   $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+                  }   
+            }
+
         }
         else
         {
               $this->email->from('info@itsonme.co.za', 'ITSONME');
               $this->email->to($input['email']);
-              $this->email->subject('Verification Code - ITSONME');
+              $this->email->subject('Transaction Gift Code - ITSONME');
               $message = "Hey ".$input['full_name']." your order is on me. Download app to get code";
               $message .= "<p>Thanks,</p>";
               $message .= "<p>ITSONME Team<br></p>";
@@ -80,6 +100,7 @@ class General extends REST_Controller {
               $this->email->send();
         } 
 
+         
         if($id) {
             $this->response(['status' => 'success', 'message' => 'Transaction created successfully'], REST_Controller::HTTP_OK);
         } else {
