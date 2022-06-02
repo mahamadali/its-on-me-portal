@@ -222,4 +222,26 @@ class User extends CI_Model
              return '[]';
         }
     }
+
+     public function getTransactionData($id,$transaction_id) {
+        $this->db->select('*');
+         $this->db->where('merchant_id', $id);
+         $this->db->where('id', $transaction_id);
+         $query = $this->db->get('transactions');
+        if($query->num_rows() > 0) {
+            return $query->row();
+        }
+        else
+        {
+             return '[]';
+        }
+    }
+
+    public  function get_product_item_data($id)  
+      {  
+          $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image');
+          $this->db->where('id', $id);
+          $query = $this->db->get('products');
+          return $query->row(); 
+      } 
 }
