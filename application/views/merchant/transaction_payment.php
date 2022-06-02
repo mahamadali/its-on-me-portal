@@ -6,7 +6,7 @@
           <!-- <h6 class="h2 text-white d-inline-block mb-0">Products</h6> -->
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item active"><a href="<?php echo base_url('merchants') ?>"><i class="fas fa-arrow-left"></i></a>&nbsp;<?php echo ucfirst($merchant->username) ?> Transactions</li>
+              <li class="breadcrumb-item active"><a href="<?php echo base_url('merchants') ?>"><i class="fas fa-arrow-left"></i></a>&nbsp;<?php echo ucfirst($merchant->username) ?> Transactions Payment Details</li>
             </ol>
           </nav>
         </div>
@@ -17,41 +17,16 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <div class="row">
-        <!-- Total Amount Section -->
-          <?php if(!empty($total_amount)) { ?>
-            <div class="col-xl-4 col-md-6">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Amount</h5>
-                      <span class="h2 font-weight-bold mb-0" id="total_pre_register_members">R<?php echo $total_amount ?></span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                        <i class="ni ni-circle-08"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php } ?>
-         <!-- Total Amount Section -->
-      </div>
-      <div class="row">
-         
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
               <div class="row align-items-center">
                 <div class="col-3">
-                  <h3 class="mb-0">Transactions </h3>
+                  <h3 class="mb-0">Transactions Session</h3>
                 </div>
               </div>
-              <form method="post" action="<?php echo base_url('merchants/transactions/'.$merchant->id) ?>">
+              <form method="post" action="<?php echo base_url('merchants/payment/'.$merchant->id) ?>">
                 <div class="row align-items-center">
                 <div class="col-3"></div>
                 <div class="col-3">
@@ -81,29 +56,36 @@
               </form>
             </div>
             <!-- Light table -->
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush" id="merchant-transactions">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort">#</th>
-                    <th scope="col" class="sort">User</th>
-                    <th scope="col">Receiver Name</th>
-                    <th scope="col">Receiver Email</th>
-                    <th scope="col">Receiver CellNumber</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Deadline</th>
-                    <th scope="col">Created</th>
-                    <th scope="col" class="sort">Status</th>
-                  </tr>
-                </thead>
-                <tbody class="list">
                   
-              </tbody>
-            </table>
-          </div>        
       </div>
     </div>
   </div>
+   <div class="row">
+        <!-- Total Amount Section -->
+          <?php if(!empty($total_amount)) { ?>
+            <div class="col-xl-4 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Amount</h5>
+                      <span class="h2 font-weight-bold mb-0" id="total_pre_register_members">R<?php echo $total_amount ?></span>
+                    </div>
+                    <div class="col-auto">
+                      <form method="post" action="<?php echo base_url('merchants/payment_success/'.$merchant->id) ?>">
+                           <input type="submit" name="payment_transaction" class="btn btn-primary" value="PAY">
+                           <input type="hidden" name="payment_month" id="payment_month" value="<?php echo $month ?>">
+                           <input type="hidden" name="payment_year" id="payment_year" value="<?php echo $year ?>">
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+         <!-- Total Amount Section -->
+      </div>
   <!-- Dark table -->
  <script>
   let dateDropdown = document.getElementById('transaction_year'); 

@@ -297,9 +297,14 @@ class Merchant extends CI_Model
 
     function make_query_transactions($id)  
       {  
+           $month = $this->input->post('month');
+           $year = $this->input->post('year');
            $this->db->select('transactions.*, CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');  
            $this->db->where('merchant_id', $id);
-            $this->db->where('transactions.status !=', 'PENDING');
+            $this->db->where('MONTH(transactions.created_at)',$month);
+            $this->db->where('YEAR(transactions.created_at)',$year);
+            $this->db->where('transactions.is_paid',0);
+            $this->db->where('transactions.status', 'COMPLETED');
             $this->db->join('users', 'users.id = transactions.user_id');
            $this->db->from($this->transaction_table);  
            if(isset($_POST["search"]["value"]))  
@@ -326,7 +331,7 @@ class Merchant extends CI_Model
            if($_POST["length"] != -1)  
            {  
                 $this->db->limit($_POST['length'], $_POST['start']);  
-           }  
+           }
            $query = $this->db->get();
            return $query->result();  
       }  
@@ -337,14 +342,43 @@ class Merchant extends CI_Model
       }       
       function get_all_data_transactions($id)  
       {  
+            $month = $this->input->post('month');
+            $year = $this->input->post('year');
            $this->db->select("transactions.*");
            $this->db->where('merchant_id', $id);
-            $this->db->where('transactions.status !=', 'PENDING');
+            $this->db->where('MONTH(transactions.created_at)',$month);
+            $this->db->where('YEAR(transactions.created_at)',$year);
+            $this->db->where('transactions.is_paid',0);
+            $this->db->where('transactions.status','COMPLETED');
             $this->db->join('users', 'users.id = transactions.user_id');
            $this->db->from($this->transaction_table);
            $this->db->order_by('id', 'DESC');   
            $query = $this->db->get();  
            return $query->result();    
       }
+
+      function totalTransactionByMonthYear($id, $month,$year)
+      {
+         $this->db->select('SUM(price) as total_amount');
+         $this->db->where('MONTH(created_at)',$month);
+         $this->db->where('YEAR(created_at)',$year);
+         $this->db->where('is_paid',0);
+         $this->db->where('merchant_id', $id);
+         $this->db->where('status','COMPLETED');
+         $this->db->from($this->transaction_table);
+         $query = $this->db->get();  
+           return $query->row();    
+
+      }
+
+
+     function update_merchant_payment_details($data, $month = '', $year = '',$id) {
+          $this->db->where('MONTH(created_at)',$month);
+          $this->db->where('YEAR(created_at)',$year);
+          $this->db->where('status','COMPLETED');
+          $this->db->where('merchant_id', $id);
+          $que = $this->db->update($this->transaction_table, $data);
+          return $que;
+    } 
  
 }

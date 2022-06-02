@@ -82,6 +82,8 @@ $route['merchants/edit-merchant-bank/(:any)/(:any)'] = 'MerchantController/edit_
 $route['merchants/update-bank'] = 'MerchantController/update_bank';
 $route['merchants/transactions/(:any)'] = 'MerchantController/transactions/$1';
 $route['merchants/transactions/ajax_list/(:any)'] = 'MerchantController/get_transactions/$1';
+$route['merchants/payment/(:any)'] = 'MerchantController/payment/$1';
+$route['merchants/payment_success/(:any)'] = 'MerchantController/paymentSuccess/$1';
 /*END USERS ROUTES*/
 
 

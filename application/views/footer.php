@@ -97,7 +97,11 @@
         "order":[],  
         "ajax":{  
              url:"<?php echo base_url(); ?>merchants/transactions/ajax_list/"+fetchTransactionEnable,
-             type:"POST"  
+             type:"POST",
+             'data': {
+                 month: '<?php echo !empty($month) ?? '' ?>',
+                 year: '<?php echo !empty($year) ?? '' ?>',
+              },  
         },  
       });  
     }

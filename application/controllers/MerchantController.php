@@ -129,6 +129,7 @@ public function get_merchants()
     <a href="'.base_url().'merchants/delete/'.$row->id.'" class="btn btn-sm btn-danger">Delete</a>
     <a href="'.base_url().'merchants/list-bank/'.$row->id.'" class="btn btn-sm btn-warning"><i class="fa fa-plus"></i> Bank</a>
     <a href="'.base_url().'merchants/transactions/'.$row->id.'" class="btn btn-sm btn-primary"><i class="fa fa-money"></i> Transactions</a>
+    <a href="'.base_url().'merchants/payment/'.$row->id.'" class="btn btn-sm btn-info"><i class="fa fa-money"></i>Pay</a>
     ';
   } else if($row->status == 1) {
     $actionBtn = '
@@ -137,6 +138,7 @@ public function get_merchants()
     <a href="'.base_url().'merchants/delete/'.$row->id.'" class="btn btn-sm btn-danger">Delete</a>
     <a href="'.base_url().'merchants/list-bank/'.$row->id.'" class="btn btn-sm btn-warning"><i class="fa fa-plus"></i> Bank</a>
     <a href="'.base_url().'merchants/transactions/'.$row->id.'" class="btn btn-sm btn-primary"><i class="fa fa-money"></i> Transactions</a>
+    <a href="'.base_url().'merchants/payment/'.$row->id.'" class="btn btn-sm btn-info"><i class="fa fa-money"></i>Pay</a>
     ';
   }
   $sub_array[] = $actionBtn;
@@ -379,6 +381,27 @@ public function delete_bank($id,$merchant_id){
    public function transactions($id) {
       $this->data['merchant_id'] = $id;
       $this->data['merchant'] = $this->merchant->getOne($id);
+      $total = '';
+      $month = $this->input->post('transaction_month') ?? date('m');
+      $year = $this->input->post('transaction_year') ?? date('Y');
+      $this->data['month'] = $month;
+      $this->data['year'] = $year;
+      if(!empty($month) && !empty($year))
+      {
+         $getTotalTransaction = $this->merchant->totalTransactionByMonthYear($id, $month,$year);
+         if(!empty($getTotalTransaction->total_amount))
+         {
+            $total = $getTotalTransaction->total_amount;
+
+         }
+         else
+         {
+             $total = 0.00;
+         }
+         
+      }
+
+      $this->data['total_amount'] = $total;
       $this->data['page'] = "merchant/transactions";
       $this->data['footer'] = $this->load->view('footer',$this->data,true);
       $this->load->view('structure',$this->data);
@@ -412,5 +435,74 @@ public function delete_bank($id,$merchant_id){
     echo json_encode($output);  
    }
 
+
+   public function payment($id)
+   {  
+      $this->data['merchant'] = $this->merchant->getOne($id);
+      $total = '';
+      $month = $this->input->post('transaction_month') ?? date('m');
+      $year = $this->input->post('transaction_year') ?? date('Y');
+      $this->data['month'] = $month;
+      $this->data['year'] = $year;
+      if(!empty($month) && !empty($year))
+      {
+         $getTotalTransaction = $this->merchant->totalTransactionByMonthYear($id, $month,$year);
+         if(!empty($getTotalTransaction->total_amount))
+         {
+            $total = $getTotalTransaction->total_amount;
+
+         }
+         else
+         {
+             $total = 0.00;
+         }
+         
+      }
+
+      $this->data['total_amount'] = $total;
+      $this->data['page'] = "merchant/transaction_payment";
+      $this->load->view('structure',$this->data);  
+   }
+
+   public function paymentSuccess($id)
+   {
+      $pay_month = $this->input->post('payment_month');
+      $pay_year = $this->input->post('payment_year');
+      $PaymentData = array('is_paid' => 1);
+      $total = '';
+      if(!empty($pay_month) && !empty($pay_year))
+      {
+         $getTotalTransaction = $this->merchant->totalTransactionByMonthYear($id, $pay_month,$pay_year);
+         if(!empty($getTotalTransaction->total_amount))
+         {
+            $total = $getTotalTransaction->total_amount;
+
+         }
+         else
+         {
+             $total = 0.00;
+         }
+         
+      }
+
+      $member_payment_data = array(
+          'merchant_id' => $id,
+          'pay_month' =>  $pay_month,
+          'pay_year' =>  $pay_year,
+          'amount' =>  $total,
+      );
+       $merchant_payment_log_id = $this->merchant->insert_data_getid($member_payment_data,'merchant_payment_logs');
+
+      $updatePaymentData = $this->merchant->update_merchant_payment_details($PaymentData,$pay_month,$pay_year,$id);
+      if (!empty($updatePaymentData)) {
+        $this->session->set_flashdata('success', 'Payment successfully!');
+
+      }else{
+        $this->session->set_flashdata('error', 'Something Wrong!');
+
+      }
+
+      redirect('merchants');
+   }
 
 }
