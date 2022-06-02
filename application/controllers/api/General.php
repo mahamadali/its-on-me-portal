@@ -242,4 +242,14 @@ class General extends REST_Controller {
 
         return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
     }
+
+    public function userTransactions_post()
+    {
+        $input = $this->input->post(); 
+        if(!isset($input['user_id'])) {
+          return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+         }
+        $getUserTransactions = $this->user->getTransactionsByMerchant($input['user_id']);
+        return $this->response(['status' => 'success', 'data' => $getUserTransactions], REST_Controller::HTTP_OK);
+    }
 }
