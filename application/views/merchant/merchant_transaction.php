@@ -51,7 +51,7 @@
                   <h3 class="mb-0">Transactions </h3>
                 </div>
               </div>
-              <form method="post" action="<?php echo base_url('merchants/transactions/'.$merchant->id) ?>">
+              <form method="post" action="<?php echo base_url('merchant/transactions') ?>">
                 <div class="row align-items-center">
                 <div class="col-3"></div>
                 <div class="col-3">
