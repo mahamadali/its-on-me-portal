@@ -141,7 +141,7 @@ a {
             </li>
             <li class="nav-item">
               <a class="nav-link <?php echo ($this->uri->segment(1) == 'transactions') ? 'active' : '' ?>" href="<?php echo base_url('merchant/transactions') ?>">
-                <i class="ni ni-notification-70"></i>
+                <i class="ni ni-money-coins"></i>
                 <span class="nav-link-text">Transactions</span>
               </a>
             </li>
