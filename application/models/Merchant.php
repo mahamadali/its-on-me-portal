@@ -304,11 +304,13 @@ class Merchant extends CI_Model
            $this->db->from($this->transaction_table);  
            if(isset($_POST["search"]["value"]))  
            {  
+            $this->db->group_start();
                 $this->db->like("transaction_id", $_POST["search"]["value"]);  
                 $this->db->or_like("users.first_name", $_POST["search"]["value"]);  
                 $this->db->or_like("transactions.full_name", $_POST["search"]["value"]);  
                 $this->db->or_like("transactions.email", $_POST["search"]["value"]);  
                 $this->db->or_like("transactions.phone_number", $_POST["search"]["value"]);  
+                $this->db->group_end();
            }  
            if(isset($_POST["order"]))  
            {  
