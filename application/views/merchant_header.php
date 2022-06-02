@@ -139,6 +139,12 @@ a {
                 <span class="nav-link-text">Redeem</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link <?php echo ($this->uri->segment(1) == 'transactions') ? 'active' : '' ?>" href="<?php echo base_url('merchant/transactions') ?>">
+                <i class="ni ni-notification-70"></i>
+                <span class="nav-link-text">Transactions</span>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link <?php //echo ($this->uri->segment(1) == 'advertising') ? 'active' : '' ?>" href="<?php //echo base_url('advertising') ?>">
                 <i class="ni ni-notification-70"></i>

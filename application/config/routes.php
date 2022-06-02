@@ -86,6 +86,11 @@ $route['merchants/payment/(:any)'] = 'MerchantController/payment/$1';
 $route['merchants/payment_success/(:any)'] = 'MerchantController/paymentSuccess/$1';
 /*END USERS ROUTES*/
 
+/*Merchant Own Data*/
+
+$route['merchant/transactions'] = 'MerchantDashboardController/transactions';
+
+/*Merchant Own Data*/
 
 //Manage Products Routes
 $route['products'] = 'Products';

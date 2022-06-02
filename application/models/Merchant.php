@@ -277,7 +277,7 @@ class Merchant extends CI_Model
     }
 
     public function monthlyPayment($id) {
-        $sql = "SELECT SUM(`price`) AS grand FROM transactions WHERE MONTH(`created_at`)=MONTH( CURRENT_DATE ) AND merchant_id=".$id;
+        $sql = "SELECT SUM(`price`) AS grand FROM transactions WHERE MONTH(`created_at`)=MONTH( CURRENT_DATE ) AND `is_paid` = 0 AND merchant_id=".$id;
         $query = $this->db->query($sql);
         if($query->num_rows() > 0) {
             return $query->row('grand') ? $query->row('grand') : 0.00;    
@@ -365,6 +365,19 @@ class Merchant extends CI_Model
          $this->db->where('is_paid',0);
          $this->db->where('merchant_id', $id);
          $this->db->where('status','COMPLETED');
+         $this->db->from($this->transaction_table);
+         $query = $this->db->get();  
+           return $query->row();    
+
+      }
+
+
+       function MerchanttotalTransactionByMonthYear($id, $month,$year)
+      {
+         $this->db->select('SUM(price) as total_amount');
+         $this->db->where('MONTH(created_at)',$month);
+         $this->db->where('YEAR(created_at)',$year);
+         $this->db->where('merchant_id', $id);
          $this->db->from($this->transaction_table);
          $query = $this->db->get();  
            return $query->row();    

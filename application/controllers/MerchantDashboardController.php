@@ -177,4 +177,35 @@ public function update_bank()
   redirect('merchant/list-bank/'.$UpdatedMerchantbankData['merchant_id']);
 }
 
+  public function transactions()
+  {   
+     $id = $this->session->userdata('merchant');
+     $this->data['merchant_id'] = $id;
+      $this->data['merchant'] = $this->merchant->getOne($id);
+      $total = '';
+      $month = $this->input->post('transaction_month') ?? date('m');
+      $year = $this->input->post('transaction_year') ?? date('Y');
+      $this->data['month'] = $month;
+      $this->data['year'] = $year;
+      if(!empty($month) && !empty($year))
+      {
+         $getTotalTransaction = $this->merchant->MerchanttotalTransactionByMonthYear($id, $month,$year);
+         if(!empty($getTotalTransaction->total_amount))
+         {
+            $total = $getTotalTransaction->total_amount;
+
+         }
+         else
+         {
+             $total = 0.00;
+         }
+         
+      }
+      
+      $this->data['total_amount'] = $total;
+      $this->data['page'] = "merchant/merchant_transaction";
+      $this->data['footer'] = $this->load->view('footer',$this->data,true);
+      $this->load->view('structure',$this->data);
+  }
+
 }
