@@ -48,6 +48,8 @@
               <table class="table align-items-center table-flush" id="product_list">
                 <thead class="thead-light">
                   <tr>
+                    <th scope="col" class="sort" data-sort="fullname">Fullname</th>
+                    <th scope="col" class="sort" data-sort="email">Email</th>
                     <th scope="col" class="sort" data-sort="username">Username</th>
                     <th scope="col" class="sort" data-sort="subject">Subject</th>
                     <th scope="col" class="sort" data-sort="message">Message</th>
@@ -58,6 +60,14 @@
                 <tbody class="list">
                   <?php foreach ($AllInquries as $key => $value) {?>
                     <tr>
+                       <td class="fullname">
+                      <?php echo $value->full_name?>
+                    </td>
+
+                    <td class="email">
+                      <?php echo $value->email?>
+                    </td>
+
                      <td class="username">
                       <?php $getUsername = $this->inquiry->getUsername($value->user_id)?>
                       <?php echo $getUsername->first_name." ".$getUsername->last_name ?>
