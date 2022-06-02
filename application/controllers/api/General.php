@@ -263,9 +263,9 @@ class General extends REST_Controller {
           return $this->response(['status' => 'failed', 'message' => 'Missing Transaction ID'], REST_Controller::HTTP_OK);
          }
         $getUserTransactions = $this->user->getTransactionData($input['user_id'],$input['transaction_id']);
-        $new_data = json_decode($getUserTransactions->menu_items);
-         if(!empty($new_data))
+         if(!empty($getUserTransactions->menu_items))
          {
+            $new_data = json_decode($getUserTransactions->menu_items);
             $getUserproduct = [] ;
              foreach ($new_data as $key => $value) {
                 $productDetail = $this->user->get_product_item_data($value->product_id);
