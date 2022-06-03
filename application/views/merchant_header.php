@@ -177,15 +177,24 @@ a {
             </li>
          
           </ul>
+          <?php
+              $this->load->helper('general');
+              $loggedIn = !empty($_SESSION['merchant']) ? $_SESSION['merchant'] : '';
+              $merchant_data = get_merchant_data($loggedIn);
+          ?>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="<?php echo base_url('assets/img/IOM-logo.png') ?>">
+                    <img alt="Image placeholder" src="<?php echo base_url($merchant_data->profile_picture) ?>">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">Merchant</span>
+                    <span class="mb-0 text-sm  font-weight-bold">
+                      <?php
+                      echo $merchant_data->username;
+                      ?>
+                      </span>
                   </div>
                 </div>
               </a>

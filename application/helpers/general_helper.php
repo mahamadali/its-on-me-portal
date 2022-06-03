@@ -26,12 +26,20 @@ function merchantProfile($id) {
 }
 
 function getAdminData($id)  
-      {  
-      	  $CI =& get_instance();
-          $CI->db->where('id', $id);
-          $query = $CI ->db->get('admin');
-          return $query->row()->role; 
-      } 
+{  
+	  $CI =& get_instance();
+    $CI->db->where('id', $id);
+    $query = $CI ->db->get('admin');
+    return $query->row()->role; 
+}
+
+function get_merchant_data($id)  
+{  
+	  $CI =& get_instance();
+    $CI->db->where('id', $id);
+    $query = $CI ->db->get('merchants');
+    return $query->row(); 
+} 
 
 function userStatus($status) {
 	switch ($status) {

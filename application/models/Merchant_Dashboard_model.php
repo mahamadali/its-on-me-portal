@@ -8,10 +8,11 @@ class Merchant_Dashboard_model extends CI_Model
         $this->load->database();
     }
     
-    public function get_all_product_count()  
+    public function get_all_product_count($id)  
       {  
            $this->db->select("*");  
-           $this->db->from('products');  
+           $this->db->from('products');
+           $this->db->where('merchant_id', $id);
            $query = $this->db->get(); 
            return $query->num_rows();    
       }

@@ -22,7 +22,7 @@ class MerchantDashboardController extends CI_Controller {
          {
              redirect('merchant/login');
          }
-        $this->data['total_items'] = $this->Merchant_Dashboard_model->get_all_product_count();
+        $this->data['total_items'] = $this->Merchant_Dashboard_model->get_all_product_count($_SESSION['merchant']);
         $this->data['page'] = "dashboard/merchant_index";
 		$this->load->view('structure',$this->data);	 
 

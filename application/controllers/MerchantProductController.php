@@ -24,7 +24,7 @@ class MerchantProductController extends CI_Controller {
        }
 
        $this->data['page'] = "products/index";
-       $this->data['AllProducts'] = $this->merchant_product->get_all_data();
+       $this->data['AllProducts'] = $this->merchant_product->get_all_data($_SESSION['merchant']);
        $this->load->view('structure',$this->data);	 
 
    }

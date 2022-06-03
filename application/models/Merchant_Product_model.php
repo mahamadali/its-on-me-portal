@@ -43,10 +43,11 @@ class Merchant_Product_model extends CI_Model
            $query = $this->db->get();  
            return $query->num_rows();  
       }       
-      function get_all_data()  
+      function get_all_data($id)  
       {  
            $this->db->select("*");  
            $this->db->from($this->table);
+           $this->db->where('merchant_id', $id);
            $this->db->order_by('id', 'DESC');   
            $query = $this->db->get();  
            return $query->result();    
