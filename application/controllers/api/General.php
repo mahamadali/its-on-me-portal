@@ -14,6 +14,7 @@ class General extends REST_Controller {
        $this->load->database();
        $this->load->helper('general');
        $this->load->model('User', 'user');
+       $this->load->model('Merchant', 'merchant');
        $this->load->library('email');
     }
 
@@ -269,8 +270,10 @@ class General extends REST_Controller {
             $getUserproduct = [] ;
              foreach ($new_data as $key => $value) {
                 $productDetail = $this->user->get_product_item_data($value->product_id);
+                $merchant_details = $this->merchant->getOne($productDetail->merchant_id);
                  $getUserproduct[$key]['product_id'] = $productDetail->id;
                  $getUserproduct[$key]['product_name'] = $productDetail->product_name;
+                 $getUserproduct[$key]['merchant_name'] = $merchant_details->username ?? '';
                  $getUserproduct[$key]['product_price'] = $value->price;
                  $getUserproduct[$key]['product_image'] = $productDetail->product_image;
                  $getUserproduct[$key]['product_description'] = $productDetail->product_description;

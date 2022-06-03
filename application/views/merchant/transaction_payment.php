@@ -46,7 +46,7 @@
                 </select>
                 </div>
                 <div class="col-3">
-                    <select  name="transaction_year" id="transaction_year" class="form-control">
+                    <select  name="filter_year" id="filter_year" class="form-control">
                    </select>
                 </div>
                 <div class="col-3">
@@ -88,7 +88,7 @@
       </div>
   <!-- Dark table -->
  <script>
-  let dateDropdown = document.getElementById('transaction_year'); 
+  let dateDropdown = document.getElementById('filter_year'); 
        
   let currentYear = new Date().getFullYear();    
   let earliestYear = 1995;     
