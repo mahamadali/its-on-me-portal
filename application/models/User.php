@@ -225,7 +225,7 @@ class User extends CI_Model
 
      public function getTransactionData($id,$transaction_id) {
         $this->db->select('*');
-         $this->db->where('merchant_id', $id);
+         $this->db->where('user_id', $id);
          $this->db->where('id', $transaction_id);
          $query = $this->db->get('transactions');
         if($query->num_rows() > 0) {
