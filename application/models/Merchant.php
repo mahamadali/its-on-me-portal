@@ -181,11 +181,12 @@ class Merchant extends CI_Model
 
     public function fetchBrandsByCat($brand_id,$category_id) {
 
-           $this->db->select('*'); 
+           $this->db->select('products.*,merchants.physical_address as physical_address'); 
             
             $this->db->where('products.merchant_id',$brand_id);
             $this->db->where("find_in_set($category_id, products.categories)");
             $this->db->where('products.status' , '1');
+            $this->db->join('merchants', 'merchants.id = products.merchant_id');
            $query = $this->db->get('products');
            $items = $query->result_array();
             if(!empty($items))
