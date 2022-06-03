@@ -386,7 +386,7 @@ class Merchant extends CI_Model
       }
 
 
-     function update_merchant_payment_details($data, $month = '', $year = '',$id) {
+     function update_merchant_payment_details($data, $month = '', $year = '',$id = '') {
           $this->db->where('MONTH(created_at)',$month);
           $this->db->where('YEAR(created_at)',$year);
           $this->db->where('status','COMPLETED');
