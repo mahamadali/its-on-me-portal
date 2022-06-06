@@ -285,4 +285,36 @@ class General extends REST_Controller {
          
         return $this->response(['status' => 'success', 'data' => $getUserTransactions], REST_Controller::HTTP_OK);
     }
+
+    public function orderSuccessTransactionDetails_post()
+    {
+        $input = $this->input->post(); 
+        if(!isset($input['user_id'])) {
+          return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+         }
+         if(!isset($input['transaction_id'])) {
+          return $this->response(['status' => 'failed', 'message' => 'Missing Transaction ID'], REST_Controller::HTTP_OK);
+         }
+        $getUserSuccessTransactions = $this->user->getSuccessTransactionData($input['user_id'],$input['transaction_id']);
+         if(!empty($getUserSuccessTransactions->menu_items))
+         {
+            $new_data = json_decode($getUserSuccessTransactions->menu_items);
+            $getUserproduct = [] ;
+             foreach ($new_data as $key => $value) {
+                $productDetail = $this->user->get_product_item_data($value->product_id);
+                 $merchant_details = $this->merchant->getOne($productDetail->merchant_id);
+                 $getUserproduct[$key]['product_id'] = $productDetail->id;
+                 $getUserproduct[$key]['product_name'] = $productDetail->product_name;
+                 $getUserproduct[$key]['merchant_name'] = $merchant_details->username ?? '';
+                 $getUserproduct[$key]['product_price'] = $value->price;
+                 $getUserproduct[$key]['product_image'] = $productDetail->product_image;
+                 $getUserproduct[$key]['product_description'] = $productDetail->product_description;
+                 $getUserproduct[$key]['product_Qty'] = $value->qty;
+                 $getUserproduct[$key]['total'] = $value->qty*$value->price;
+             }
+             $getUserSuccessTransactions->product_detail = $getUserproduct;
+         }
+         
+        return $this->response(['status' => 'success', 'data' => $getUserSuccessTransactions], REST_Controller::HTTP_OK);
+    }
 }

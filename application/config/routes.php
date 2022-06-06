@@ -367,3 +367,4 @@ $route['api/ozow-error'] = 'api/General/ozowError';
 $route['api/ozow-notify'] = 'api/General/ozowNotify';
 $route['api/user-transactions'] = 'api/General/userTransactions';
 $route['api/user-transaction-details'] = 'api/General/userTransactionDetails';
+$route['api/order-success-info'] = 'api/General/orderSuccessTransactionDetails';
