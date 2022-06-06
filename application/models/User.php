@@ -210,7 +210,7 @@ class User extends CI_Model
 
     public function getTransactionsByMerchant($id) {
         $this->db->select('transactions.id as transaction_id,transactions.created_at as date_of_order,transactions.price as amount,merchants.username as brand_name, transactions.full_name as receiver_name');
-        $this->db->where('merchant_id', $id);
+        $this->db->where('user_id', $id);
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('merchants', 'merchants.id = transactions.merchant_id');
         $query = $this->db->get('transactions');
