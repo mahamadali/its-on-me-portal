@@ -291,6 +291,7 @@ class Merchant extends CI_Model
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('users', 'users.id = transactions.user_id');
         $query = $this->db->get('transactions');
+        print_r($this->db->last_query());exit();
         if($query->num_rows() > 0) {
             return $query->result();
         }
