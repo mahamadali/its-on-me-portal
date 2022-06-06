@@ -213,6 +213,7 @@ class User extends CI_Model
         $this->db->where('user_id', $id);
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('merchants', 'merchants.id = transactions.merchant_id');
+        $this->db->order_by('transactions.id', 'DESC');
         $query = $this->db->get('transactions');
         if($query->num_rows() > 0) {
             return $query->result();
