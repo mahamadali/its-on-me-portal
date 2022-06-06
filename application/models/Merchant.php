@@ -287,11 +287,10 @@ class Merchant extends CI_Model
 
     public function getTransactionsByMerchant($id) {
         $this->db->select('transactions.*, CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');
-        $this->db->where('user_id', $id);
+        $this->db->where('merchant_id', $id);
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('users', 'users.id = transactions.user_id');
         $query = $this->db->get('transactions');
-        print_r($this->db->last_query());exit();
         if($query->num_rows() > 0) {
             return $query->result();
         }
