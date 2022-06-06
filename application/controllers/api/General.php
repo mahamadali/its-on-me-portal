@@ -251,7 +251,6 @@ class General extends REST_Controller {
           return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
          }
         $getUserTransactions = $this->user->getTransactionsByMerchant($input['user_id']);
-        print_r($getUserTransactions);exit();
         return $this->response(['status' => 'success', 'data' => $getUserTransactions], REST_Controller::HTTP_OK);
     }
 
