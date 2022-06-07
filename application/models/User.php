@@ -135,10 +135,17 @@ class User extends CI_Model
      function check_user_exist($id)  
       {  
            $this->db->select("*");  
-           $this->db->from($this->table);  
-           $this->db->where('id', $id);
-           $query = $this->db->get(); 
+           $this->db->where('id', $id);  
+           $query = $this->db->get($this->table); 
            return $query->num_rows();        
+      }
+
+      function check_user_exist_by_email($email)  
+      {  
+           $this->db->select("*");  
+           $this->db->where('email', $email);  
+           $query = $this->db->get($this->table); 
+           return $query->row();        
       }
 
       function getTokens($id)  
@@ -213,6 +220,7 @@ class User extends CI_Model
         $this->db->where('user_id', $id);
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('merchants', 'merchants.id = transactions.merchant_id');
+        $this->db->order_by('transactions.id', 'DESC');
         $query = $this->db->get('transactions');
         if($query->num_rows() > 0) {
             return $query->result();

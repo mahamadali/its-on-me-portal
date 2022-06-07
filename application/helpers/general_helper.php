@@ -62,3 +62,19 @@ function dd($data) {
 	print_r($data);
 	exit;
 }
+
+function sendSMS($phone, $message) {
+	$phone = ltrim($phone, '0');
+	$phone = '+27'.$phone;
+
+	$ch = curl_init();
+
+	curl_setopt($ch, CURLOPT_URL, 'https://platform.clickatell.com/messages/http/send?apiKey=vL_cLMDKRD2vk5HWlR4dJw==&to='.$phone.'&content='.urlencode($message));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	$result = curl_exec($ch);
+	if (curl_errno($ch)) {
+	    echo 'Error:' . curl_error($ch);
+	}
+	curl_close($ch);
+}

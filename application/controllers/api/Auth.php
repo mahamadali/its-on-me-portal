@@ -14,6 +14,7 @@ class Auth extends REST_Controller {
        $this->load->database();
        $this->load->helper('general');
        $this->load->model('User', 'user');
+       $this->load->model('Merchant', 'merchant');
        $this->load->library('email');
     }
        
@@ -76,6 +77,35 @@ class Auth extends REST_Controller {
         
         $id = $this->user->insert_data_getid($data, 'users');
         if($id) {
+
+            $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
+
+            if(!empty($getUserTransactions)) {
+                $getUserTokens = $this->user->getTokens($id);
+                foreach($getUserTransactions as $transaction) {
+
+                    $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your its on me CODE is ". $transaction->code ."";
+                    $title = "Transaction gift code";
+                    $link = '';
+                    if(!empty($getUserTokens))
+                    {
+                       foreach ($getUserTokens as $key => $token) {
+                             $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);     
+                        }
+                    }
+                    $user_notification_data = [
+                    'user_id' => $id,
+                    'title' => $title,
+                    'message' => $message,
+                    'link' => '',
+                    'created_at' => date('Y-m-d H:i:s'),
+                   ];
+                   $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+                   sendSMS($input['phoneNumber'], $message);
+                }
+            }
+
+
             $this->response(['status' => 'success', 'message' => 'Account created successfully', 'user_id' => $id], REST_Controller::HTTP_OK);
         } else {
             $this->response(['status' => 'failed', 'message' => 'Incorrect login credentials!'], REST_Controller::HTTP_OK);
