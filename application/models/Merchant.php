@@ -394,5 +394,14 @@ class Merchant extends CI_Model
           $que = $this->db->update($this->transaction_table, $data);
           return $que;
     } 
+
+    public function getNewUserTransactionsAvailable($phone)
+    {
+        $this->db->where('phone_number', $phone);
+        $this->db->where('is_redeemed', 0);
+        $this->db->where('status', 'COMPLETED');
+        $query = $this->db->get($this->transaction_table);
+        return $query->result();
+    }
  
 }

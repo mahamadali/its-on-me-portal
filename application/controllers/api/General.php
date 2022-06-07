@@ -157,23 +157,24 @@ class General extends REST_Controller {
          
              $getUserTokens = $this->user->getTokens($input['Optional1']);
 
-            if(!empty($getUserTokens))
-            {
-               $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+             $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
                $title = "Transaction gift code";
                $link = '';
+            if(!empty($getUserTokens))
+            {
                foreach ($getUserTokens as $key => $token) {
                      $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);     
                 }
-                $user_notification_data = [
-                'user_id' => $input['Optional1'],
-                'title' => $title,
-                'message' => $message,
-                'link' => '',
-                'created_at' => date('Y-m-d H:i:s'),
-               ];
-               $this->user->insert_data_getid($user_notification_data, 'user_notifications');
             }
+
+            $user_notification_data = [
+            'user_id' => $input['Optional1'],
+            'title' => $title,
+            'message' => $message,
+            'link' => '',
+            'created_at' => date('Y-m-d H:i:s'),
+           ];
+           $this->user->insert_data_getid($user_notification_data, 'user_notifications');
 
         }
         else
