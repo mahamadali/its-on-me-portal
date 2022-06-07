@@ -14,6 +14,7 @@ class Auth extends REST_Controller {
        $this->load->database();
        $this->load->helper('general');
        $this->load->model('User', 'user');
+       $this->load->model('Merchant', 'merchant');
        $this->load->library('email');
     }
        
@@ -77,7 +78,7 @@ class Auth extends REST_Controller {
         $id = $this->user->insert_data_getid($data, 'users');
         if($id) {
 
-            $getUserTransactions = $this->user->getNewUserTransactionsAvailable($input['phoneNumber']);
+            $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
 
             if(!empty($getUserTransactions)) {
                 $getUserTokens = $this->user->getTokens($id);
