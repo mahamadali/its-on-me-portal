@@ -141,7 +141,8 @@ class General extends REST_Controller {
             'status' => 'COMPLETED'
         );
 
-        $checkUserExist = $this->user->check_user_exist($input['Optional1']);
+        $checkUserExist = $this->user->check_user_exist_by_email($transaction['email']);
+        
         if($checkUserExist == 1)
         {
               $this->email->from('info@itsonme.co.za', 'ITSONME');

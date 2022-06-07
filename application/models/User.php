@@ -135,9 +135,16 @@ class User extends CI_Model
      function check_user_exist($id)  
       {  
            $this->db->select("*");  
-           $this->db->from($this->table);  
-           $this->db->where('id', $id);
-           $query = $this->db->get(); 
+           $this->db->where('id', $id);  
+           $query = $this->db->get($this->table); 
+           return $query->num_rows();        
+      }
+
+      function check_user_exist_by_email($email)  
+      {  
+           $this->db->select("*");  
+           $this->db->where('email', $email);  
+           $query = $this->db->get($this->table); 
            return $query->num_rows();        
       }
 
