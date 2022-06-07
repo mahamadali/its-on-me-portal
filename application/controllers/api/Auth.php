@@ -77,7 +77,7 @@ class Auth extends REST_Controller {
         $id = $this->user->insert_data_getid($data, 'users');
         if($id) {
 
-            $getUserTransactions = $this->getNewUserTransactionsAvailable($input['phoneNumber']);
+            $getUserTransactions = $this->user->getNewUserTransactionsAvailable($input['phoneNumber']);
 
             if(!empty($getUserTransactions)) {
                 $getUserTokens = $this->user->getTokens($id);
