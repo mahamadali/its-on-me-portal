@@ -156,11 +156,11 @@ class General extends REST_Controller {
               $this->email->set_newline("\r\n");
               $this->email->send();
          
-             $getUserTokens = $this->user->getTokens($checkUserExist->id);
+            $getUserTokens = $this->user->getTokens($checkUserExist->id);
 
-             $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
-               $title = "Transaction gift code";
-               $link = '';
+            $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+            $title = "Transaction gift code";
+            $link = '';
             if(!empty($getUserTokens))
             {
                foreach ($getUserTokens as $key => $token) {
@@ -175,7 +175,10 @@ class General extends REST_Controller {
             'link' => '',
             'created_at' => date('Y-m-d H:i:s'),
            ];
-           $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+
+           sendSMS($checkUserExist->phone, $message);
+
+            $this->user->insert_data_getid($user_notification_data, 'user_notifications');
 
         }
         else
@@ -190,6 +193,7 @@ class General extends REST_Controller {
               $this->email->set_mailtype('html');
               $this->email->set_newline("\r\n");
               $this->email->send();
+              sendSMS($transaction['phone_number'], $message);
         }
 
         $this->db->where('id', $transaction['id'])->update('transactions', $data);

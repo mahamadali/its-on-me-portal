@@ -101,6 +101,7 @@ class Auth extends REST_Controller {
                     'created_at' => date('Y-m-d H:i:s'),
                    ];
                    $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+                   sendSMS($input['phoneNumber'], $message);
                 }
             }
 
