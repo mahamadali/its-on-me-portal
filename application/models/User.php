@@ -145,7 +145,7 @@ class User extends CI_Model
            $this->db->select("*");  
            $this->db->where('email', $email);  
            $query = $this->db->get($this->table); 
-           return $query->num_rows();        
+           return $query->row();        
       }
 
       function getTokens($id)  

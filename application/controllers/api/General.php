@@ -143,7 +143,7 @@ class General extends REST_Controller {
 
         $checkUserExist = $this->user->check_user_exist_by_email($transaction['email']);
         
-        if($checkUserExist == 1)
+        if(!empty($checkUserExist))
         {
               $this->email->from('info@itsonme.co.za', 'ITSONME');
               $this->email->to($transaction['email']);
@@ -156,7 +156,7 @@ class General extends REST_Controller {
               $this->email->set_newline("\r\n");
               $this->email->send();
          
-             $getUserTokens = $this->user->getTokens($input['Optional1']);
+             $getUserTokens = $this->user->getTokens($checkUserExist->id);
 
              $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
                $title = "Transaction gift code";
@@ -169,7 +169,7 @@ class General extends REST_Controller {
             }
 
             $user_notification_data = [
-            'user_id' => $input['Optional1'],
+            'user_id' => $checkUserExist->id,
             'title' => $title,
             'message' => $message,
             'link' => '',

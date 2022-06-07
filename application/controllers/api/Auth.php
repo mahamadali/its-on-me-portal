@@ -94,7 +94,7 @@ class Auth extends REST_Controller {
                         }
                     }
                     $user_notification_data = [
-                    'user_id' => $input['Optional1'],
+                    'user_id' => $id,
                     'title' => $title,
                     'message' => $message,
                     'link' => '',
