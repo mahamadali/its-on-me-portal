@@ -102,7 +102,6 @@ class Auth extends REST_Controller {
                    ];
 
                    $this->user->insert_data_getid($user_notification_data, 'user_notifications');
-                   print_r($user_notification_data);exit();
                    sendSMS($input['phoneNumber'], $message);
                 }
             }
