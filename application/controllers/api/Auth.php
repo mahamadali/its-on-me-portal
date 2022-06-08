@@ -79,7 +79,7 @@ class Auth extends REST_Controller {
         if($id) {
 
             $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
-
+            print_r($getUserTransactions);exit();
             if(!empty($getUserTransactions)) {
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
