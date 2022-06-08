@@ -79,7 +79,7 @@ class Auth extends REST_Controller {
         if($id) {
 
             $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
-            print_r($getUserTransactions);exit();
+
             if(!empty($getUserTransactions)) {
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
@@ -100,6 +100,8 @@ class Auth extends REST_Controller {
                     'link' => '',
                     'created_at' => date('Y-m-d H:i:s'),
                    ];
+
+                   print_r($user_notification_data);exit();
                    $this->user->insert_data_getid($user_notification_data, 'user_notifications');
                    sendSMS($input['phoneNumber'], $message);
                 }
