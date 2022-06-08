@@ -177,7 +177,8 @@ class General extends REST_Controller {
             'created_at' => date('Y-m-d H:i:s'),
            ];
 
-           sendSMS($checkUserExist->phone, $message);
+             $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me CODE is ". $code ."";
+           sendSMS($checkUserExist->phone, $Smsmessage);
 
             $this->user->insert_data_getid($user_notification_data, 'user_notifications');
 
@@ -190,13 +191,14 @@ class General extends REST_Controller {
               $this->email->subject('Transaction Gift Code - ITSONME');
              // $message = "Hey ".$transaction['full_name']." your order is on me. Download app to get code";
                $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download app to get code";
-              $message .= "<p>Thanks,</p>";
+              $message .= "<pThanks,</p>";
               $message .= "<p>ITSONME Team<br></p>";
               $this->email->message($message);
               $this->email->set_mailtype('html');
               $this->email->set_newline("\r\n");
               $this->email->send();
-              sendSMS($transaction['phone_number'], $message);
+              $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download app to get code";
+              sendSMS($transaction['phone_number'], $Smsmessage);
         }
 
         $this->db->where('id', $transaction['id'])->update('transactions', $data);
