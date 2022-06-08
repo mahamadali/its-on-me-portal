@@ -4,7 +4,7 @@ class Merchant extends CI_Model
 
      var $table = "merchants";  
      var $transaction_table = "transactions";  
-    var $select_column = array("id","username","email","password","bio","profile_picture","physical_address","categories","status","created_at","updated_at"); 
+    var $select_column = array("id","username","email","password","bio","profile_picture","physical_address","categories","status","is_super_merchant","created_at","updated_at"); 
      public function __construct()
     {
         parent::__construct();

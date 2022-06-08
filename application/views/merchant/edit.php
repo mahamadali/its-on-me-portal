@@ -34,7 +34,7 @@
                 <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="password">Password</label>
-                  <input type="password" id="password" class="form-control" placeholder="Enter Password" name="password" autocomplete="off" value="">
+                  <input type="password" id="password" class="form-control" placeholder="Enter Password" name="password" autocomplete="off">
                 </div>
               </div>
               <div class="col-lg-6">
@@ -92,6 +92,15 @@
                       <option <?php if(in_array($category->id,explode(',',$merchant_data->categories))){ echo "selected"; }  ?> value="<?php echo $category->id ?>"><?php echo $category->name ?></option>
                     <?php endforeach; ?>
                   </select>
+                </div>
+              </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="is_super_merchant">Is Super Merchant</label>
+                   &nbsp;<input type="checkbox" id="is_super_merchant" <?php echo $merchant_data->is_super_merchant == '1' ? 'checked' : '' ?>  name="is_super_merchant" value="1">
                 </div>
               </div>
               </div>

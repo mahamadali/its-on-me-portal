@@ -39,7 +39,7 @@ public function store(){
   $MerchantsData['password'] = md5($MerchantsData['password']);
   $MerchantsData['categories'] = implode(',',$MerchantsData['categories']);
   $MerchantsData['created_at'] = date('Y-m-d H:i:s');
-
+  $MerchantsData['is_super_merchant'] = $this->input->post('is_super_merchant') ?? '0';
   if(!empty($_FILES['profile_picture']['name'])){ 
     $filename = time()."_".str_replace(' ','_',$_FILES['profile_picture']['name']);
     $_FILES['file']['name']     = $filename; 
@@ -176,16 +176,19 @@ public function edit($id)
 public function update()
 {
 
-      //echo "<pre>";print_r($MerchantsData);exit();
   $MerchantsData = $this->input->post();
       //$updated_id = $this->input->post('merchant_edit_id');
   $merchant_edit_id = $this->input->post('merchant_edit_id');
   if(!empty($MerchantsData['password'])) {
     $MerchantsData['password'] = md5($MerchantsData['password']);  
   }
+  else
+  {
+    unset($MerchantsData['password']);
+  }
   $MerchantsData['categories'] = implode(',',$MerchantsData['categories']);
   $MerchantsData['updated_at'] = date('Y-m-d H:i:s');
-
+  $MerchantsData['is_super_merchant'] = $this->input->post('is_super_merchant') ?? '0';
   if(!empty($_FILES['profile_picture']['name'])){ 
     $getImage = merchantProfile($merchant_edit_id);
     @unlink('assets/merchant_profile/'.basename($getImage));

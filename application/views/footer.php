@@ -441,6 +441,33 @@
          });
        });
       </script>
+
+      <script type="text/javascript">
+$(document).on("click",".show_full_info",function() {
+   var inquiry_id = $(this).data('id');
+    $.ajax({  
+           type:"POST",  
+           dataType : 'json',
+           url:"<?php echo base_url('InquiryController/info') ?>",  
+           data:"inquiry_id="+inquiry_id,  
+           /*beforeSend: function(data){ 
+              $('#InquiryModal').modal('show');
+          }, */ 
+          success: function(response){ 
+             console.log(response);
+             $('#InquiryModal').modal('show');
+             $('#InquiryModal').find('#InquiryModalTitle').html(response.data.subject+' Inquiry Data');
+             $('#InquiryModal').find('.row').find('#Inquiry_username').html(response.data.user_fullname);
+             $('#InquiryModal').find('.row').find('#Inquiry_email').html(response.data.email);
+             $('#InquiryModal').find('.row').find('#Inquiry_fullname').html(response.data.full_name);
+             $('#InquiryModal').find('.row').find('#Inquiry_subject').html(response.data.subject);
+             $('#InquiryModal').find('.row').find('#Inquiry_message').html(response.data.message);
+             $('#InquiryModal').find('.row').find('#Inquiry_created_at').html(response.data.created_at);
+             
+          }  
+        });
+});
+</script>
 </body>
 
 </html>

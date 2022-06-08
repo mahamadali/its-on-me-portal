@@ -425,7 +425,7 @@ class Products_model extends CI_Model
         public function searchByBrand($merchantName)
         {
             if(empty($merchantName)) { return []; }
-            $this->db->select('`merchants`.*,CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, provinces.name as province_name');
+            $this->db->select('`merchants`.*,CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image,merchants.is_super_merchant as Is Super Merchant, provinces.name as province_name');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->like('merchants`.username', $merchantName);
             $this->db->order_by('merchants.id', 'DESC');

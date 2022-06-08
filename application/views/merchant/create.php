@@ -83,6 +83,14 @@
               </div>
               </div>
 
+              <div class="row">
+                <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="is_super_merchant">Is Super Merchant</label>
+                   &nbsp;<input type="checkbox" id="is_super_merchant"  name="is_super_merchant" value="1">
+                </div>
+              </div>
+              </div>
               
               <div class="col-4">
                  <input type="submit" class="btn btn-primary my-4" value="Add Merchant">

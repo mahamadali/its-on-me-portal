@@ -136,6 +136,15 @@ class Inquiry_model extends CI_Model
           return $query->row(); 
       } 
 
+        function get_inquiry_data($id)  
+      {  
+           $this->db->select('inquiries.*, CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');
+          $this->db->where('inquiries.id', $id);
+          $this->db->join('users', 'users.id = inquiries.user_id');
+          $query = $this->db->get('inquiries');
+          return $query->row(); 
+      } 
+
      
  
 }

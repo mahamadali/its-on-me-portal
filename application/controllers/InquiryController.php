@@ -105,4 +105,23 @@ public function delete($id){
 }
 
 
+  public function info()
+  {
+     if(empty($this->input->post('inquiry_id')))
+    {
+        $this->session->set_flashdata('error', 'Something Wrong!');
+        redirect('inquiries');
+    }
+    $id = $this->input->post('inquiry_id');
+    $InquiryData = $this->inquiry->get_inquiry_data($id);
+    if(!empty($InquiryData))
+    {
+       echo json_encode(['status' => '200' ,'data' => $InquiryData]);   
+   }
+   else
+   {
+       echo json_encode(['status' => '404' ,'msg' => 'Something Wrong !']);
+   }
+  }
+
 }

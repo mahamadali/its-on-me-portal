@@ -3,6 +3,17 @@
 {
   color:black;
 }
+#InquiryModal .modal-header .close
+{
+   margin: 0;
+   padding: 0;
+}
+#InquiryModal #InquiryModalTitle
+{
+   font-size:30px;
+   text-align: center;
+   margin: 0 auto;
+}
 </style>
 <!-- Header -->
 <div class="header bg-primary pb-6">
@@ -54,6 +65,7 @@
                     <th scope="col" class="sort" data-sort="subject">Subject</th>
                     <th scope="col" class="sort" data-sort="message">Message</th>
                     <th scope="col" >Created At</th>
+                    <th scope="col" class="sort" data-sort="view">Action</th>
                     
                   </tr>
                 </thead>
@@ -78,12 +90,30 @@
                     </td>
 
                     <td class="message">
-                      <?php echo $value->subject?>
+                      <?php 
+                          $length = strlen($value->message);
+                          if($length > 20)
+                          {
+                             echo  substr($value->message,'0','50');
+                          }
+                          else
+                          {
+                             echo $value->message;
+                          }
+
+                          
+                       ?>
+                     
                     </td>
 
                     <td class="message">
                       <?php echo $value->created_at;?>
                     </td>
+
+                     <td class="message">
+                       <a href="#" class="btn btn-primary btn-sm show_full_info" data-id="<?php echo $value->id ?>">View</a>
+                    </td>
+
                   </tr>
                 <?php } ?>
               </tbody>
@@ -94,4 +124,72 @@
     </div>
   </div>
   <!-- Dark table -->
- 
+ <div class="modal fade" id="InquiryModal" tabindex="-1" role="dialog" aria-labelledby="InquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="InquiryModalTitle">First Inquiry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <table class="table table-bordered inquiry_info_table" style="width:50%">
+              
+           </table>
+           <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Username</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_username"></label>
+              </div>
+           </div>
+           <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_email"></label>
+              </div>
+           </div>
+           <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Full Name</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_fullname"></label>
+              </div>
+           </div>
+           <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Subject</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_subject"></label>
+              </div>
+           </div>
+           <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Message</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_message"></label>
+              </div>
+           </div>
+            <div class="row" style="border:1px solid black;">
+              <div class="col-md-6">
+                <label>Created At</label>
+              </div>
+              <div class="col-md-6">
+                <label id="Inquiry_created_at"></label>
+              </div>
+           </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
