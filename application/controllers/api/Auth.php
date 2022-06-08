@@ -84,10 +84,10 @@ class Auth extends REST_Controller {
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
                     $senderName = $this->user->getUserById($transaction->user_id);
-                   $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your its on me CODE is ". $transaction->code ."";
+                   $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
 
 
-                   // $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your its on me CODE is ". $transaction->code ."";
+                   // $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your “It’s on me” CODE is ". $transaction->code ."";
 
                     $title = "Transaction gift code";
                     $link = '';
@@ -106,7 +106,7 @@ class Auth extends REST_Controller {
                    ];
 
                    $this->user->insert_data_getid($user_notification_data, 'user_notifications');
-                   $Smsmessage = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your its on me CODE is ". $transaction->code ."";
+                   $Smsmessage = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
                    sendSMS($input['phoneNumber'], $Smsmessage);
                 }
             }

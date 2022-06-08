@@ -189,15 +189,15 @@ class General extends REST_Controller {
               $this->email->from('info@itsonme.co.za', 'ITSONME');
               $this->email->to($transaction['email']);
               $this->email->subject('Transaction Gift Code - ITSONME');
-             // $message = "Hey ".$transaction['full_name']." your order is on me. Download app to get code";
-               $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download app to get code";
+             // $message = "Hey ".$transaction['full_name']." your order is on me. Download the “It’s on me” app to get code.";
+               $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download the “It’s on me” app to get code.";
               $message .= "<pThanks,</p>";
               $message .= "<p>ITSONME Team<br></p>";
               $this->email->message($message);
               $this->email->set_mailtype('html');
               $this->email->set_newline("\r\n");
               $this->email->send();
-              $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download app to get code";
+              $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download the “It’s on me” app to get code.";
               sendSMS($transaction['phone_number'], $Smsmessage);
         }
 
