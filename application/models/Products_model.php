@@ -370,7 +370,7 @@ class Products_model extends CI_Model
 
         public function fetchOffers()
         {
-            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as Is_Super_Merchant, provinces.name');
+            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
@@ -381,7 +381,7 @@ class Products_model extends CI_Model
 
         public function giftIdeas()
         {
-            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as Is_Super_Merchant, provinces.name');
+            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
@@ -394,7 +394,7 @@ class Products_model extends CI_Model
         public function searchByProvince($province)
         {
             if(empty($province)) { return []; }
-            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as Is_Super_Merchant, provinces.name');
+            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
@@ -407,7 +407,7 @@ class Products_model extends CI_Model
         public function searchByName($name)
         {
             if(empty($name)) { return []; }
-            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as Is_Super_Merchant, provinces.name');
+            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('categories', 'categories.id=merchants.categories');
             $this->db->join('provinces', 'provinces.id=merchants.province');
@@ -425,7 +425,7 @@ class Products_model extends CI_Model
         public function searchByBrand($merchantName)
         {
             if(empty($merchantName)) { return []; }
-            $this->db->select('`merchants`.*,CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image,merchants.is_super_merchant as Is_Super_Merchant, provinces.name as province_name');
+            $this->db->select('`merchants`.*,CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image,merchants.is_super_merchant as is_super_merchant, provinces.name as province_name');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->like('merchants`.username', $merchantName);
             $this->db->order_by('merchants.id', 'DESC');
