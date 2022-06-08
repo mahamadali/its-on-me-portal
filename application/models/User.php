@@ -299,4 +299,19 @@ class User extends CI_Model
              return [];
         }
     }
+
+
+     public function getUserById($id)
+     {
+          $this->db->select('CONCAT(`users`.first_name, " ",  `users`.last_name) as user_fullname');
+        $this->db->where('users.id', $id);       
+        $query = $this->db->get('users');
+        if($query->num_rows() > 0) {
+            return $query->row()->user_fullname;
+        }
+        else
+        {
+             return [];
+        }
+     }
 }

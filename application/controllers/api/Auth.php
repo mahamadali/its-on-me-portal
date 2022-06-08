@@ -84,7 +84,11 @@ class Auth extends REST_Controller {
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
 
-                    $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your its on me CODE is ". $transaction->code ."";
+                   $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from <Sender Name>, Your its on me CODE is ". $transaction->code ."";
+
+
+                   // $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your its on me CODE is ". $transaction->code ."";
+
                     $title = "Transaction gift code";
                     $link = '';
                     if(!empty($getUserTokens))
