@@ -157,8 +157,9 @@ class General extends REST_Controller {
               $this->email->send();
          
             $getUserTokens = $this->user->getTokens($checkUserExist->id);
-
-            $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+            $senderName = $this->user->getUserById($transaction['user_id']);
+             $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me CODE is ". $code ."";
+            //$message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
             $title = "Transaction gift code";
             $link = '';
             if(!empty($getUserTokens))
@@ -183,10 +184,12 @@ class General extends REST_Controller {
         }
         else
         {
+              $senderName = $this->user->getUserById($transaction['user_id']);
               $this->email->from('info@itsonme.co.za', 'ITSONME');
               $this->email->to($transaction['email']);
               $this->email->subject('Transaction Gift Code - ITSONME');
-              $message = "Hey ".$transaction['full_name']." your order is on me. Download app to get code";
+             // $message = "Hey ".$transaction['full_name']." your order is on me. Download app to get code";
+               $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download app to get code";
               $message .= "<p>Thanks,</p>";
               $message .= "<p>ITSONME Team<br></p>";
               $this->email->message($message);
