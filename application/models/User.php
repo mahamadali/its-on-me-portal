@@ -266,4 +266,37 @@ class User extends CI_Model
           $query = $this->db->get('products');
           return $query->row(); 
       } 
+
+       public  function getUserEmail($id)  
+      {  
+          $this->db->select('email');
+          $this->db->where('id', $id);
+          $query = $this->db->get('users');
+          if($query->num_rows() > 0) {
+            return $query->row()->email;
+        }
+        else
+        {
+             return [];
+        }
+          
+      } 
+
+ 
+
+      public function getUserGiftHistory($email) {
+        $this->db->select('transactions.id as transaction_id,transactions.created_at as date_of_order,transactions.price as amount,merchants.username as brand_name, transactions.full_name as receiver_name');
+        $this->db->where('transactions.email', $email);
+        $this->db->where('transactions.status !=', 'PENDING');
+        $this->db->join('merchants', 'merchants.id = transactions.merchant_id');
+        $this->db->order_by('transactions.id', 'DESC');
+        $query = $this->db->get('transactions');
+        if($query->num_rows() > 0) {
+            return $query->result();
+        }
+        else
+        {
+             return [];
+        }
+    }
 }

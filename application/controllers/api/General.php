@@ -323,4 +323,24 @@ class General extends REST_Controller {
          
         return $this->response(['status' => 'success', 'data' => $getUserSuccessTransactions], REST_Controller::HTTP_OK);
     }
+
+    public function userGiftHistory_post()
+    {
+        $input = $this->input->post(); 
+        if(!isset($input['user_id'])) {
+          return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+         }
+
+         $UserEmail = $this->user->getUserEmail($input['user_id']);
+         if(!empty($UserEmail))
+         {
+            $GetUserGiftHistory = $this->user->getUserGiftHistory($UserEmail);
+         }
+         else
+         {
+            $GetUserGiftHistory = [];  
+         }
+            return $this->response(['status' => 'success', 'data' => $GetUserGiftHistory], REST_Controller::HTTP_OK);
+
+    }
 }
