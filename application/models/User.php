@@ -285,7 +285,7 @@ class User extends CI_Model
  
 
       public function getUserGiftHistory($email) {
-        $this->db->select('transactions.id as transaction_id,transactions.created_at as date_of_order,transactions.price as amount,merchants.username as brand_name, CONCAT(`users`.first_name, " ",  `users`.last_name) as receiver_name');
+        $this->db->select('transactions.id as transaction_id,transactions.created_at as date_of_order,transactions.price as amount,merchants.username as brand_name, CONCAT(`users`.first_name, " ",  `users`.last_name) as receiver_name,transactions.user_id as transaction_user_id');
         $this->db->where('transactions.email', $email);
         $this->db->where('transactions.status !=', 'PENDING');
         $this->db->join('merchants', 'merchants.id = transactions.merchant_id');
