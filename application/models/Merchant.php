@@ -145,12 +145,13 @@ class Merchant extends CI_Model
     }
 
     public function getDataByCategoryId($category_id = '') {
-        $this->db->select('`'.$this->table.'`.*, CONCAT("'.base_url().'", `'.$this->table.'`.profile_picture) as profile_url');
+        $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as profile_url,provinces.name as Region');
         if(!empty($category_id))
         {
             $this->db->where("find_in_set($category_id, categories)");
         }
-        $query = $this->db->get($this->table);
+        $this->db->join('provinces', 'provinces.id = merchants.province');
+        $query = $this->db->get('merchants');
         $result = $query->result_array();
         return $result;
     }
