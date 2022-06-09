@@ -51,8 +51,14 @@ class Product extends REST_Controller {
         if(empty($user)) {
             return $this->response(['status' => 'failed', 'message' => 'You do not have permission'], REST_Controller::HTTP_OK);
         }
-
-        $merchants = $this->merchant->getDataByCategoryId($input['category_id']);
+        if(empty($input['category_id']))
+        {
+            $merchants = $this->merchant->getDataByCategoryId();
+        }
+        else
+        {
+            $merchants = $this->merchant->getDataByCategoryId($input['category_id']);
+        }
         return $this->response(['status' => 'success', 'data' => $merchants], REST_Controller::HTTP_OK);
     }
 
