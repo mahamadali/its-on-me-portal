@@ -61,7 +61,7 @@
                     ?>
                   <tr>
                     <?php if($this->session->userdata('admin')): ?>
-                      <td><?php echo $merchant->username; ?></td>
+                      <td><?php echo !empty($merchant->username) ? $merchant->username : 'N/A'; ?></td>
                     <?php endif; ?>
                      <td class="price">
                       <?php
