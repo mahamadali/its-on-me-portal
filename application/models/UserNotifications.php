@@ -13,6 +13,7 @@ class UserNotifications extends CI_Model
     public function userNotification($userId) {
         $this->db->select('`'.$this->table.'`.*, CONCAT("'.base_url().'", `'.$this->table.'`.photo) as photo');
         $this->db->where('user_id', $userId);
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get('user_notifications');
         return $query->result();
     }
