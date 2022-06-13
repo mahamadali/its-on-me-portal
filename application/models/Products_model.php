@@ -370,7 +370,7 @@ class Products_model extends CI_Model
 
         public function fetchOffers()
         {
-            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name');
+            $this->db->select('`'.$this->table.'`.*, `'.$this->table.'`.status, CONCAT("'.base_url().'", `'.$this->table.'`.product_image) as product_image, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image, merchants.username as brand_name,merchants.is_super_merchant as is_super_merchant, provinces.name as Region');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
