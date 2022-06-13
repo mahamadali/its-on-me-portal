@@ -211,13 +211,13 @@ a {
               </a>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link <?php echo (empty($this->uri->segment(2)) && $this->uri->segment(1) == 'vouchers') ? 'active' : '' ?>" href="<?php echo base_url('vouchers') ?>">
+            <!-- <li class="nav-item">
+              <a class="nav-link <?php //echo (empty($this->uri->segment(2)) && $this->uri->segment(1) == 'vouchers') ? 'active' : '' ?>" href="<?php //echo base_url('vouchers') ?>">
                 <i class="ni ni-tie-bow"></i>
                 <span class="nav-link-text">Vouchers</span>
               </a>
             </li>
-
+ -->
            <!--  <li class="nav-item">
               <a class="nav-link <?php //echo ($this->uri->segment(2) == 'reports') ? 'active' : '' ?>" href="<?php //echo base_url('reports') ?>">
                 <i class="ni ni-check-bold"></i>
