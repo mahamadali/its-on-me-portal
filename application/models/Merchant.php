@@ -185,7 +185,7 @@ class Merchant extends CI_Model
 
     public function fetchBrandsByCat($brand_id,$category_id) {
 
-           $this->db->select('products.*,merchants.physical_address as physical_address,provinces.name as Region'); 
+           $this->db->select('products.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,merchants.physical_address as physical_address,provinces.name as Region'); 
             
             $this->db->where('products.merchant_id',$brand_id);
             $this->db->where("find_in_set($category_id, products.categories)");
