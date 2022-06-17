@@ -166,7 +166,11 @@ class Merchant extends CI_Model
             $this->db->where('merchants.status',0);
            $query = $this->db->get();  
            $categories = $query->row_array(); 
-           $cat = explode(',', $categories['categories']);
+           if(!empty($categories))
+           {
+             $cat = explode(',', $categories['categories']);
+
+           }
            if(!empty($cat))
            {
                 $this->db->select('categories.id,categories.name');
