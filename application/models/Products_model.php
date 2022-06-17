@@ -385,6 +385,7 @@ class Products_model extends CI_Model
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
+            $this->db->where('merchants.status',0);
             $this->db->order_by('id', 'DESC');
             $this->db->limit(10);
             $query = $this->db->get($this->table);
