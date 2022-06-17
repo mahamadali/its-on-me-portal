@@ -123,7 +123,7 @@ class General extends REST_Controller {
         $response = curl_exec($curl);
 
         print_r($response);
-        exit();
+        exit(); 
 
         curl_close($curl);
 
