@@ -412,6 +412,7 @@ class Products_model extends CI_Model
             $this->db->join('categories', 'categories.id=merchants.categories');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
+            $this->db->where('merchants`.status', 0);
             $this->db->group_start();
             $this->db->like('`'.$this->table.'`.product_name', $name);
             $this->db->or_like('merchants.username', $name);
