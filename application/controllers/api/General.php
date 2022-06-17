@@ -73,7 +73,7 @@ class General extends REST_Controller {
 
         $user = $this->user->get_user_profile_data($data['user_id']);
         $jsonData = '{ 
-            "SiteCode": "ITSONM", 
+            "SiteCode": "ITSONM",
             "CountryCode": "ZA",
             "CurrencyCode": "ZAR",
             "Amount": '.$data["price"].',
@@ -85,11 +85,11 @@ class General extends REST_Controller {
             "ErrorUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-error",
             "SuccessUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-success",
             "NotifyUrl": "https://itsonme.co.za/its-on-me-portal/api/ozow-notify",
-            "IsTest": "true"
+            "IsTest": "false"
         }';
 
         $jsonArray = json_decode($jsonData);
-
+        
         $string = '';
         foreach ($jsonArray as $key => $value) {
             $string .= $value;
@@ -101,6 +101,7 @@ class General extends REST_Controller {
         $jsonArray->HashCheck = $hashed;
 
         $jsonPostData = json_encode($jsonArray);
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -122,7 +123,7 @@ class General extends REST_Controller {
 
         $response = curl_exec($curl);
 
-        print_r($response);
+        echo $response;
         exit();
 
         curl_close($curl);
