@@ -163,6 +163,7 @@ class Merchant extends CI_Model
            $this->db->from('merchants');  
            $this->db->join('categories', 'merchants.categories = categories.id');
             $this->db->where('merchants.id',$brand_id);
+            $this->db->where('merchants.status',0);
            $query = $this->db->get();  
            $categories = $query->row_array(); 
            $cat = explode(',', $categories['categories']);
