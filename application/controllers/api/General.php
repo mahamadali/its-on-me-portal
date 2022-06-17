@@ -123,9 +123,6 @@ class General extends REST_Controller {
 
         $response = curl_exec($curl);
 
-        echo $response;
-        exit();
-
         curl_close($curl);
 
         $response = json_decode($response);

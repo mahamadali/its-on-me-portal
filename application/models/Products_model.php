@@ -374,7 +374,7 @@ class Products_model extends CI_Model
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
-            $this->db->where('merchants`.status', 0);
+            $this->db->where('merchants`.status', 1);
             $this->db->where('is_featured', 1);
             $query = $this->db->get($this->table);
             return $query->result_array();
@@ -386,7 +386,7 @@ class Products_model extends CI_Model
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->order_by('id', 'DESC');
             $this->db->limit(10);
             $query = $this->db->get($this->table);
@@ -400,7 +400,7 @@ class Products_model extends CI_Model
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
-            $this->db->where('merchants`.status', 0);
+            $this->db->where('merchants`.status', 1);
             $this->db->like('provinces.name', $province);
             $this->db->order_by('id', 'DESC');
             $query = $this->db->get($this->table);
@@ -415,7 +415,7 @@ class Products_model extends CI_Model
             $this->db->join('categories', 'categories.id=merchants.categories');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $this->db->where('`'.$this->table.'`.status', 1);
-            $this->db->where('merchants`.status', 0);
+            $this->db->where('merchants`.status', 1);
             $this->db->group_start();
             $this->db->like('`'.$this->table.'`.product_name', $name);
             $this->db->or_like('merchants.username', $name);
@@ -435,7 +435,7 @@ class Products_model extends CI_Model
             {
                 $this->db->like('merchants`.username', $merchantName);
             }
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->order_by('merchants.id', 'DESC');
             $query = $this->db->get('merchants');
             return $query->result_array();
