@@ -73,7 +73,7 @@ class General extends REST_Controller {
 
         $user = $this->user->get_user_profile_data($data['user_id']);
         $jsonData = '{ 
-            "SiteCode": "ITSONM",
+            "SiteCode": "ITS-ITS-005",
             "CountryCode": "ZA",
             "CurrencyCode": "ZAR",
             "Amount": '.$data["price"].',
