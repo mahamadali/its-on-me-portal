@@ -151,6 +151,7 @@ class Merchant extends CI_Model
             $this->db->where("find_in_set($category_id, categories)");
         }
         $this->db->join('provinces', 'provinces.id = merchants.province');
+        $this->db->where('merchants`.status', 0);
         $query = $this->db->get('merchants');
         $result = $query->result_array();
         return $result;
