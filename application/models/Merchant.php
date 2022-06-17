@@ -269,6 +269,7 @@ class Merchant extends CI_Model
             $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address ,`merchants.username` as merchant_name , `merchants.province` as province,provinces.name as province_name');
             $this->db->where('merchant_id',$brand_id);
             $this->db->where('products.id',$product_id);
+            $this->db->where('merchants.status',0);
             $this->db->join('merchants', 'merchants.id = products.merchant_id');
             $this->db->join('provinces', 'provinces.id = merchants.province');
             $query = $this->db->get('products');
