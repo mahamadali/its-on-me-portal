@@ -431,6 +431,7 @@ class Products_model extends CI_Model
             {
                 $this->db->like('merchants`.username', $merchantName);
             }
+            $this->db->where('merchants.status',0);
             $this->db->order_by('merchants.id', 'DESC');
             $query = $this->db->get('merchants');
             return $query->result_array();
