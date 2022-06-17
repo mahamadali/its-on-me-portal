@@ -73,7 +73,7 @@ class General extends REST_Controller {
 
         $user = $this->user->get_user_profile_data($data['user_id']);
         $jsonData = '{ 
-            "SiteCode": "TSTSTE0001", 
+            "SiteCode": "ITSONM", 
             "CountryCode": "ZA",
             "CurrencyCode": "ZAR",
             "Amount": '.$data["price"].',
@@ -94,7 +94,7 @@ class General extends REST_Controller {
         foreach ($jsonArray as $key => $value) {
             $string .= $value;
         }
-        $string = $string."215114531AFF7134A94C88CEEA48E";
+        $string = $string."eK0FzPTejEqm5xR3SjBw94weStBHKMLv";
         $string = strtolower($string);
         $hashed = hash("sha512", $string);
 
@@ -104,7 +104,7 @@ class General extends REST_Controller {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => 'https://api.ozow.com/PostPaymentRequest?ApiKey=EB5758F2C3B4DF3FF4F2669D5FF5B',
+          CURLOPT_URL => 'https://api.ozow.com/PostPaymentRequest?ApiKey=UnuPoiNYDH0MYTdGiOuKZPlN2Ee9LBn8',
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => '',
           CURLOPT_MAXREDIRS => 10,
@@ -116,7 +116,7 @@ class General extends REST_Controller {
           CURLOPT_HTTPHEADER => array(
             'Accept: application/json',
             'Content-Type: application/json',
-            'ApiKey: EB5758F2C3B4DF3FF4F2669D5FF5B'
+            'ApiKey: UnuPoiNYDH0MYTdGiOuKZPlN2Ee9LBn8'
           ),
         ));
 
