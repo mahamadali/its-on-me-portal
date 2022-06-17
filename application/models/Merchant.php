@@ -151,7 +151,7 @@ class Merchant extends CI_Model
             $this->db->where("find_in_set($category_id, categories)");
         }
         $this->db->join('provinces', 'provinces.id = merchants.province');
-        $this->db->where('merchants`.status', 0);
+        $this->db->where('merchants`.status', 1);
         $query = $this->db->get('merchants');
         $result = $query->result_array();
         return $result;
@@ -163,7 +163,7 @@ class Merchant extends CI_Model
            $this->db->from('merchants');  
            $this->db->join('categories', 'merchants.categories = categories.id');
             $this->db->where('merchants.id',$brand_id);
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
            $query = $this->db->get();  
            $categories = $query->row_array(); 
            if(!empty($categories))
@@ -196,7 +196,7 @@ class Merchant extends CI_Model
             $this->db->where('products.merchant_id',$brand_id);
             $this->db->where("find_in_set($category_id, products.categories)");
             $this->db->where('products.status' , '1');
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->join('merchants', 'merchants.id = products.merchant_id');
             $this->db->join('provinces', 'provinces.id = merchants.province');
            $query = $this->db->get('products');
@@ -216,7 +216,7 @@ class Merchant extends CI_Model
             $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address,provinces.name as Region');
             $this->db->where('merchant_id',$brand_id);
             $this->db->where('products.is_featured' , '1');
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->join('merchants', 'merchants.id = products.merchant_id');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             $query = $this->db->get('products');
@@ -259,7 +259,7 @@ class Merchant extends CI_Model
             $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image');
             $this->db->join('merchants', 'merchants.id=products.merchant_id');
             $this->db->where('products.merchant_id',$brand_id);
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->like('product_name',$search_text);
             $query = $this->db->get('products');
             //print_r($this->db->last_query());exit();
@@ -279,7 +279,7 @@ class Merchant extends CI_Model
             $this->db->select('`products`.*, CONCAT("'.base_url().'", `products`.product_image) as product_image,`merchants.physical_address` as physical_address ,`merchants.username` as merchant_name , `merchants.province` as province,provinces.name as province_name');
             $this->db->where('merchant_id',$brand_id);
             $this->db->where('products.id',$product_id);
-            $this->db->where('merchants.status',0);
+            $this->db->where('merchants.status',1);
             $this->db->join('merchants', 'merchants.id = products.merchant_id');
             $this->db->join('provinces', 'provinces.id = merchants.province');
             $query = $this->db->get('products');
