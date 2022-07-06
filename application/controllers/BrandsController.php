@@ -73,6 +73,11 @@ redirect('brands');
 
 public function delete($id)
 {
+    $getImage = $this->advertise->getBannerImage($id);
+    if(!empty($getImage))
+    {
+      @unlink('assets/brand_logos/'.basename($getImage));
+    }
   $brand_id = $this->Brands_model->delete_data('brands','id',$id);
 
   if(!empty($brand_id)) {
