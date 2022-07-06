@@ -16,9 +16,17 @@
                 <h6 class="heading-small text-muted mb-4">Brand information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-name">Name</label>
+                        <label class="form-control-label" for="input-name">Brand Logo</label>
+                        <input type="file" id="logo" class="form-control" name="logo" required="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-name">Brand Name</label>
                         <input type="text" id="name" class="form-control" placeholder="Enter Brand Name" name="name" required="">
                       </div>
                     </div>

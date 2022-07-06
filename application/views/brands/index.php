@@ -41,7 +41,8 @@
               <table class="table align-items-center table-flush" id="cat_list">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Name</th>
+                    <th scope="col" class="sort" data-sort="name">Brand Logo</th>
+                    <th scope="col" class="sort" data-sort="name">Brand Name</th>
                     <th scope="col" class="sort" data-sort="created_at">Created At</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -49,6 +50,12 @@
                 <tbody class="list">
                   <?php foreach ($AllBrands as $key => $item) {?>
                   <tr>
+                    <td class="logo">
+                       <?php if(!empty($item->logo)): ?>
+                        <img src="<?php echo $item->logo ?>" height="100" width="100">
+                      <?php endif; ?>
+                    </td>
+
                     <td class="name">
                       <?php echo $item->name ?>
                     </td>

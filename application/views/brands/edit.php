@@ -17,6 +17,19 @@
                 <h6 class="heading-small text-muted mb-4">Brand information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-name">Brand Logo</label>
+                        <input type="file" id="logo" class="form-control" name="logo">
+                      </div>
+                    </div>
+                  </div>
+
+                      <?php if(!empty($brandData->logo)): ?>
+                      <img src="<?php echo base_url().$brandData->logo ?>" height="100" width="100">
+                     <?php endif; ?>
+
+                  <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-name">Name</label>

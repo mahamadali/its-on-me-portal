@@ -81,4 +81,13 @@ public function update_brand_detail($id,$data) {
           return $que;
     } 
     
+     function getBrandImage($id)  
+      {  
+           $this->db->select("logo");  
+           $this->db->from($this->table);
+           $this->db->where('id', $id);
+           $query = $this->db->get();  
+
+           return $query->row()->logo;    
+      }
 }
