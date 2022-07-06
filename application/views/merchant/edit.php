@@ -82,6 +82,23 @@
               </div>
               </div>
 
+
+              <div class="row">
+                 <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="bio">Brand</label>
+                   <select id="brand_id" class="form-control" name="brand_id" required="">
+                    <option value="">Select Brand</option>
+                    <?php foreach($Brands as $brand): ?>
+                      <option <?php echo ($brand->id == $merchant_data->brand_id) ? 'selected' : '' ?> value="<?php echo $brand->id ?>"><?php echo $brand->name ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+              </div>
+
+
+
                <div class="row">
                 <div class="col-lg-12">
                 <div class="form-group">

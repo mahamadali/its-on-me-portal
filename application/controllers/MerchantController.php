@@ -21,7 +21,6 @@ class MerchantController extends CI_Controller {
      redirect('/');
    }
 
-
    $this->data['page'] = "merchant/index";
    $this->load->view('structure',$this->data);  
 
@@ -31,6 +30,7 @@ class MerchantController extends CI_Controller {
  {
   $this->data['provinces'] = provinces();
   $this->data['categories'] = categories();
+  $this->data['Brands'] = $this->merchant->get_all_brands_data();
   $this->data['page'] = "merchant/create";   
   $this->load->view('structure',$this->data); 
 }
@@ -167,8 +167,8 @@ public function edit($id)
 {
   $this->data['provinces'] = provinces();
   $this->data['merchant_data'] = $this->merchant->get_merchant_data($id);
+  $this->data['Brands'] = $this->merchant->get_all_brands_data();
   $this->data['categories'] = categories();
-   // print_r($this->data['merchant_data']->profile_picture);exit();
   $this->data['page'] = "merchant/edit";
   $this->load->view('structure',$this->data);  
 }

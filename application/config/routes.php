@@ -369,3 +369,12 @@ $route['api/user-transactions'] = 'api/General/userTransactions';
 $route['api/user-transaction-details'] = 'api/General/userTransactionDetails';
 $route['api/order-success-info'] = 'api/General/orderSuccessTransactionDetails';
 $route['api/user-gift-history'] = 'api/General/userGiftHistory';
+
+
+//Manage Brands
+$route['brands'] = 'BrandsController';
+$route['brands/add'] = 'BrandsController/add';
+$route['brands/store'] = 'BrandsController/store';
+$route['brands/delete/(:any)'] = 'BrandsController/delete/$1';
+$route['brands/edit/(:any)'] = 'BrandsController/edit/$1';
+$route['brands/update'] = 'BrandsController/update';

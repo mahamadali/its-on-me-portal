@@ -67,6 +67,19 @@
                    <input type="text" id="physical_address" class="form-control" placeholder="Enter physical address" name="physical_address" required="">
                 </div>
               </div>
+
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="bio">Brand</label>
+                   <select id="brand_id" class="form-control" name="brand_id" required="">
+                    <option value="">Select Brand</option>
+                    <?php foreach($Brands as $brand): ?>
+                      <option value="<?php echo $brand->id ?>"><?php echo $brand->name ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+
               </div>
 
                <div class="row">

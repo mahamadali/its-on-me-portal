@@ -178,10 +178,10 @@ a {
 
             <!-- Settings -->
 
-             <li class="<?php echo ($this->uri->segment(1) == 'product-categories') || ($this->uri->segment(1) == 'admins') ? 'active' : '' ?>">
+             <li class="<?php echo ($this->uri->segment(1) == 'product-categories') || ($this->uri->segment(1) == 'admins') || ($this->uri->segment(1) == 'brands') ? 'active' : '' ?>">
 
               <a href="#settings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="ni ni-settings" style="font-size: .9375rem;line-height: 1.5rem;min-width:1.2rem;"></i> Settings</a>
-              <ul class="collapse list-unstyled <?php echo ($this->uri->segment(1) == 'product-categories') || ($this->uri->segment(1) == 'admins')  ? 'show' : '' ?>" id="settings">
+              <ul class="collapse list-unstyled <?php echo ($this->uri->segment(1) == 'product-categories') || ($this->uri->segment(1) == 'admins') || ($this->uri->segment(1) == 'brands')  ? 'show' : '' ?>" id="settings">
                 <li class="nav-item" style="padding-left:30px;">
                  <a class="nav-link <?php echo ($this->uri->segment(1) == 'product-categories') ? 'active' : '' ?>" href="<?php echo base_url('product-categories') ?>">
                     <i class="ni ni-app"></i>
@@ -197,6 +197,12 @@ a {
                   </a>
                 </li>
               <?php endif; ?>
+              <li class="nav-item" style="padding-left:30px;">
+                 <a class="nav-link <?php echo ($this->uri->segment(1) == 'brands') ? 'active' : '' ?>" href="<?php echo base_url('brands') ?>">
+                    <i class="ni ni-app"></i>
+                    <span class="nav-link-text">Brands</span>
+                  </a>
+                </li>
               </ul>
             </li> 
 

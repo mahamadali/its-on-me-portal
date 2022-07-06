@@ -420,5 +420,14 @@ class Merchant extends CI_Model
         $query = $this->db->get($this->transaction_table);
         return $query->result();
     }
+
+    public function get_all_brands_data()  
+      {  
+           $this->db->select("*");  
+           $this->db->from('brands');
+           $this->db->order_by('id', 'DESC');   
+           $query = $this->db->get();  
+           return $query->result();    
+      }
  
 }
