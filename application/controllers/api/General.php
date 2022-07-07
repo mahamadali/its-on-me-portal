@@ -233,7 +233,7 @@ public function generatePaymentLinkViaPaygate($data = '') {
     $data = array(
         'PAYGATE_ID'        => 10011072130,
         'REFERENCE'         => 'pgtest_123456789',
-        'AMOUNT'            => $data['price'],
+        'AMOUNT'            => $data['price'] * 100,
         'CURRENCY'          => 'ZAR',
         'RETURN_URL'        => 'https://itsonme.co.za/its-on-me-portal/api/paygate-notify',
         'TRANSACTION_DATE'  => $DateTime->format('Y-m-d H:i:s'),
@@ -242,7 +242,7 @@ public function generatePaymentLinkViaPaygate($data = '') {
         'EMAIL'             => 'rehankhan89050@gmail.com',
     );
 
-    
+
     $checksum = md5(implode('', $data) . $encryptionKey);
 
     $data['CHECKSUM'] = $checksum;
