@@ -183,7 +183,7 @@ public function paygateNotify_post()
               sendSMS($transaction['phone_number'], $Smsmessage);
             }
 
-            echo $message;exit();
+          
             $this->db->where('id', $transaction['id'])->update('transactions', $data);
 
             return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
