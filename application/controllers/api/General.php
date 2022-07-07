@@ -110,7 +110,19 @@ public function paygateNotify_post()
         if(!empty($PAY_REQUEST_ID))
         {
             $getOrdersDataByPaymentID = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
-            print_r($getOrdersDataByPaymentID);exit();
+            if($TRANSACTION_STATUS == 1)
+            {
+                 $data = array(
+                    'status' => 'COMPLETED',
+                );
+            }
+            else
+            {
+                $data = array(
+                    'status' => 'CANCELLED',
+                );
+            }
+            $this->db->where('id', $getOrdersDataByPaymentID['id'])->update('transactions', $data);
         }
 
     }
