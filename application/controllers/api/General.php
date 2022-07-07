@@ -99,7 +99,7 @@ public function paygateSuccess_get($id)
     }
 }
 
-public function paygateNotify_get()
+public function paygateNotify_post()
 {
     print_r($_REQUEST);exit();
 }
