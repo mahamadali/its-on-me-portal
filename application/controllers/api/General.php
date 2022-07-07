@@ -226,7 +226,7 @@ public function paygateNotify_post()
 public function generatePaymentLinkViaPaygate($data = '') {
 
    $encryptionKey = 'secret';
-   $UserEmail = $this->userInfo($data['user_id'])
+   $UserEmail = $this->userInfo($data['user_id']);
    print_r($UserEmail['email']);exit();
     $DateTime = new DateTime();
 
