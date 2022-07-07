@@ -110,7 +110,7 @@ public function paygateNotify_post()
         if(!empty($PAY_REQUEST_ID))
         {
             $transaction = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
-            echo "<pre>";print_r($transaction);exit();
+
             if($TRANSACTION_STATUS == 1)
             {
                  $data = array(
@@ -183,6 +183,7 @@ public function paygateNotify_post()
               sendSMS($transaction['phone_number'], $Smsmessage);
             }
 
+            echo $message;exit();
             $this->db->where('id', $transaction['id'])->update('transactions', $data);
 
             return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
