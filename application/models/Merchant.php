@@ -154,7 +154,6 @@ class Merchant extends CI_Model
         $this->db->join('brands', 'brands.id = merchants.brand_id');
         $this->db->where('merchants`.status', 1);
         $query = $this->db->get('merchants');
-        print_r($this->db->last_query());exit();
         $result = $query->result_array();
         return $result;
     }
