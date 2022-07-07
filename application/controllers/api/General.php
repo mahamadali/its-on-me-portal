@@ -109,7 +109,7 @@ public function paygateNotify_post()
 
         if(!empty($PAY_REQUEST_ID))
         {
-            $getOrdersDataByPaymentID = $this->getOrdersDataByPayID($PAY_REQUEST_ID)
+            $getOrdersDataByPaymentID = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
             print_r($getOrdersDataByPayID);exit();
         }
 
