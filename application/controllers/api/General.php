@@ -55,7 +55,7 @@ class General extends REST_Controller {
         // Generate Payment Link
         //$paymentData = $this->generatePaymentLink($data); 
     $paymentData = $this->generatePaymentLinkViaPaygate($data); 
-
+    print_r($paymentData);exit();
     $id = $this->user->insert_data_getid($data, 'transactions');
 
     if($id) {
