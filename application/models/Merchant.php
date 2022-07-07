@@ -4,7 +4,7 @@ class Merchant extends CI_Model
 
      var $table = "merchants";  
      var $transaction_table = "transactions";  
-    var $select_column = array("id","username","email","password","bio","profile_picture","physical_address","categories","status","is_super_merchant","created_at","updated_at"); 
+    var $select_column = array("id","username","email","password","bio","profile_picture","physical_address","brand_id","categories","status","is_super_merchant","created_at","updated_at"); 
      public function __construct()
     {
         parent::__construct();
@@ -145,12 +145,13 @@ class Merchant extends CI_Model
     }
 
     public function getDataByCategoryId($category_id = '') {
-        $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as profile_url,provinces.name as Region');
+        $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as profile_url,provinces.name as Region , brands.name as brand_name');
         if(!empty($category_id))
         {
             $this->db->where("find_in_set($category_id, categories)");
         }
         $this->db->join('provinces', 'provinces.id = merchants.province');
+        $this->db->join('brands', 'brands.id = merchants.brand_id');
         $this->db->where('merchants`.status', 1);
         $query = $this->db->get('merchants');
         $result = $query->result_array();
