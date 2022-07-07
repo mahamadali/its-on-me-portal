@@ -101,13 +101,33 @@ public function paygateSuccess_get($id)
 
 public function paygateNotify_post()
 {
-    print_r($_REQUEST);exit();
+    if(!empty($_REQUEST['PAY_REQUEST_ID']) || !empty($_REQUEST['TRANSACTION_STATUS']))
+    {
+        $PAY_REQUEST_ID = $_REQUEST['PAY_REQUEST_ID'];
+        $TRANSACTION_STATUS = $_REQUEST['TRANSACTION_STATUS'];
+        $CHECKSUM = $_REQUEST['CHECKSUM'];
+
+        if(!empty($PAY_REQUEST_ID))
+        {
+            $getOrdersDataByPaymentID = $this->getOrdersDataByPayID($PAY_REQUEST_ID)
+            print_r($getOrdersDataByPayID);exit();
+        }
+
+    }
 }
 
  public function getOrdersData($id)
  {
      $this->db->select('transactions.*');
      $this->db->where('id' , $id);
+     $response = $this->db->get('transactions')->row_array();
+     return $response;
+ }
+
+ public function getOrdersDataByPayID($PAY_REQUEST_ID)
+ {
+     $this->db->select('transactions.*');
+     $this->db->where('PAY_REQUEST_ID' , $PAY_REQUEST_ID);
      $response = $this->db->get('transactions')->row_array();
      return $response;
  }
