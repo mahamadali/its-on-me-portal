@@ -109,7 +109,7 @@ public function paygateNotify_post()
 
         if(!empty($PAY_REQUEST_ID))
         {
-            $getOrdersDataByPaymentID = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
+            $transaction = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
             if($TRANSACTION_STATUS == 1)
             {
                  $data = array(
@@ -122,7 +122,69 @@ public function paygateNotify_post()
                     'status' => 'CANCELLED',
                 );
             }
-            $this->db->where('id', $getOrdersDataByPaymentID['id'])->update('transactions', $data);
+            $checkUserExist = $this->user->check_user_exist_by_email($transaction['email']);
+
+                if(!empty($checkUserExist))
+                {
+                  $this->email->from('info@itsonme.co.za', 'ITSONME');
+                  $this->email->to($transaction['email']);
+                  $this->email->subject('Transaction Gift Code - ITSONME');
+                  $message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+                  $message .= "<p>Thanks,</p>";
+                  $message .= "<p>ITSONME Team<br></p>";
+                  $this->email->message($message);
+                  $this->email->set_mailtype('html');
+                  $this->email->set_newline("\r\n");
+                  $this->email->send();
+
+                  $getUserTokens = $this->user->getTokens($checkUserExist->id);
+                  $senderName = $this->user->getUserById($transaction['user_id']);
+                  $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me CODE is ". $code ."";
+                        //$message = "Hey ".$transaction['full_name']." your order is on me. Your its on me CODE is ". $code ."";
+                  $title = "Transaction gift code";
+                  $link = '';
+                  if(!empty($getUserTokens))
+                  {
+                     foreach ($getUserTokens as $key => $token) {
+                       $this->user->sendNotificationUser($token['device_token'],$title,$message,$link);     
+                   }
+               }
+
+               $user_notification_data = [
+                'user_id' => $checkUserExist->id,
+                'title' => $title,
+                'message' => $message,
+                'link' => '',
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me CODE is ". $code ."";
+            sendSMS($checkUserExist->phone, $Smsmessage);
+
+            $this->user->insert_data_getid($user_notification_data, 'user_notifications');
+
+            }
+            else
+            {
+              $senderName = $this->user->getUserById($transaction['user_id']);
+              $this->email->from('info@itsonme.co.za', 'ITSONME');
+              $this->email->to($transaction['email']);
+              $this->email->subject('Transaction Gift Code - ITSONME');
+                         // $message = "Hey ".$transaction['full_name']." your order is on me. Download the “It’s on me” app to get code.";
+              $message = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download the “It’s on me” app to get code.";
+              $message .= "<pThanks,</p>";
+              $message .= "<p>ITSONME Team<br></p>";
+              $this->email->message($message);
+              $this->email->set_mailtype('html');
+              $this->email->set_newline("\r\n");
+              $this->email->send();
+              $Smsmessage = "Hey ".$transaction['full_name']." you've received a gift from ".$senderName.", Your its on me. Download the “It’s on me” app to get code.";
+              sendSMS($transaction['phone_number'], $Smsmessage);
+            }
+
+            $this->db->where('id', $transaction['id'])->update('transactions', $data);
+
+            return $this->response(['status' => 'success', 'data' => $data], REST_Controller::HTTP_OK);
         }
 
     }
