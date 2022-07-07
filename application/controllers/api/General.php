@@ -110,6 +110,7 @@ public function paygateNotify_post()
         if(!empty($PAY_REQUEST_ID))
         {
             $transaction = $this->getOrdersDataByPayID($PAY_REQUEST_ID);
+            print_r($transaction);exit();
             if($TRANSACTION_STATUS == 1)
             {
                  $data = array(
