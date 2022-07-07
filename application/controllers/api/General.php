@@ -242,6 +242,7 @@ public function generatePaymentLinkViaPaygate($data = '') {
         'EMAIL'             => 'rehankhan89050@gmail.com',
     );
 
+    print_r($data);exit();
     $checksum = md5(implode('', $data) . $encryptionKey);
 
     $data['CHECKSUM'] = $checksum;
