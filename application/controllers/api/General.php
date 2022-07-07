@@ -53,9 +53,9 @@ class General extends REST_Controller {
     ];
 
         // Generate Payment Link
-        //$paymentData = $this->generatePaymentLink($data); 
-    $paymentData = $this->generatePaymentLinkViaPaygate($data); 
-    print_r($paymentData);exit();
+        $paymentData = $this->generatePaymentLink($data); 
+    //$paymentData = $this->generatePaymentLinkViaPaygate($data); 
+    
     $id = $this->user->insert_data_getid($data, 'transactions');
 
     if($id) {
@@ -72,37 +72,7 @@ class General extends REST_Controller {
 
 public function generatePaymentLinkViaPaygate($data = '') {
 
-   $encryptionKey = 'secret';
-
-$data = array(
-    'PAYGATE_ID'        => 10011072130,
-    'PAY_REQUEST_ID'    => '23B785AE-C96C-32AF-4879-D2C9363DB6E8',
-    'REFERENCE'         => 'pgtest_123456789'
-);
-
-print_r($data);exit();
-$checksum = md5(implode('', $data) . $encryptionKey);
-
-$data['CHECKSUM'] = $checksum;
-
-$fieldsString = http_build_query($data);
-
-//open connection
-$ch = curl_init();
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch, CURLOPT_URL, 'https://secure.paygate.co.za/payweb3/query.trans');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_NOBODY, false);
-curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_HOST']);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsString);
-
-//execute post
-$result = curl_exec($ch);
-
-//close connection
-curl_close($ch);
+   
 }
 
 
