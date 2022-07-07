@@ -227,7 +227,7 @@ public function generatePaymentLinkViaPaygate($data = '') {
 
    $encryptionKey = 'secret';
    $UserEmail = $this->userInfo($data['user_id']);
-   print_r($UserEmail['email']);exit();
+   //print_r($UserEmail['email']);exit();
     $DateTime = new DateTime();
 
     $data = array(
@@ -239,7 +239,7 @@ public function generatePaymentLinkViaPaygate($data = '') {
         'TRANSACTION_DATE'  => $DateTime->format('Y-m-d H:i:s'),
         'LOCALE'            => 'en-za',
         'COUNTRY'           => 'ZAF',
-        'EMAIL'             => 'customer@paygate.co.za',
+        'EMAIL'             => 'rehankhan89050@gmail.com',
     );
 
     $checksum = md5(implode('', $data) . $encryptionKey);
