@@ -53,26 +53,107 @@ class General extends REST_Controller {
     ];
 
         // Generate Payment Link
-        $paymentData = $this->generatePaymentLink($data); 
-    //$paymentData = $this->generatePaymentLinkViaPaygate($data); 
-    
+        //$paymentData = $this->generatePaymentLink($data); 
+    $data['payment_request'] = $this->generatePaymentLinkViaPaygate($data);
+    $data['PAY_REQUEST_ID'] = explode('&', $data['payment_request'])[1];
+    $data['PAY_REQUEST_ID'] = explode('=', $data['PAY_REQUEST_ID'])[1];
+    // print_r($data['PAY_REQUEST_ID']);exit();
     $id = $this->user->insert_data_getid($data, 'transactions');
 
     if($id) {
         $this->response([
             'status' => 'success', 
             'message' => 'Transaction created successfully',
-            'paymentRequestId' => $paymentData->paymentRequestId,
-            'url' => $paymentData->url
+            'paymentRequestId' => $data['PAY_REQUEST_ID'],
+            // 'paymentRequestId' => $paymentData->paymentRequestId,
+            // 'url' => $paymentData->url
+            'url' => base_url().'api/paygate-payment/'.$id
         ], REST_Controller::HTTP_OK);
     } else {
         $this->response(['status' => 'failed', 'message' => 'Transaction failed!'], REST_Controller::HTTP_OK);
     }
 }
 
+public function paygateSuccess_get($id)
+{
+    if(!empty($id))
+    {
+        $getOrdersData = $this->getOrdersData($id);
+
+        //CHECKSUM Request GET
+        $data['CHECKSUM'] = explode('&', $getOrdersData['payment_request'])[3];
+        $data['CHECKSUM'] = explode('=', $data['CHECKSUM'])[1];
+       
+        //payment Request ID GET
+         $data['PAY_REQUEST_ID'] = explode('&', $getOrdersData['payment_request'])[1];
+        $data['PAY_REQUEST_ID'] = explode('=', $data['PAY_REQUEST_ID'])[1];
+        
+      $htmlForm = '<form action="https://secure.paygate.co.za/payweb3/process.trans" method="POST" >
+                    <input type="hidden" name="PAY_REQUEST_ID" value=\''.$data['PAY_REQUEST_ID'].'\'>
+                    <input type="hidden" name="CHECKSUM"  value=\''.$data['CHECKSUM'].'\'>';
+    
+        $htmlForm .= '<input type="submit" class="btn btn-success" value="Pay Now" ></form>';
+        
+
+          echo $htmlForm;
+    }
+}
+
+public function paygateNotify_get()
+{
+    print_r($_REQUEST);exit();
+}
+
+ public function getOrdersData($id)
+ {
+     $this->db->select('transactions.*');
+     $this->db->where('id' , $id);
+     $response = $this->db->get('transactions')->row_array();
+     return $response;
+ }
+
 public function generatePaymentLinkViaPaygate($data = '') {
 
-   
+   $encryptionKey = 'secret';
+
+    $DateTime = new DateTime();
+
+    $data = array(
+        'PAYGATE_ID'        => 10011072130,
+        'REFERENCE'         => 'pgtest_123456789',
+        'AMOUNT'            => 3299,
+        'CURRENCY'          => 'ZAR',
+        'RETURN_URL'        => 'https://itsonme.co.za/its-on-me-portal/api/paygate-notify',
+        'TRANSACTION_DATE'  => $DateTime->format('Y-m-d H:i:s'),
+        'LOCALE'            => 'en-za',
+        'COUNTRY'           => 'ZAF',
+        'EMAIL'             => 'customer@paygate.co.za',
+    );
+
+    $checksum = md5(implode('', $data) . $encryptionKey);
+
+    $data['CHECKSUM'] = $checksum;
+
+    $fieldsString = http_build_query($data);
+
+    //open connection
+    $ch = curl_init();
+
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch, CURLOPT_URL, 'https://secure.paygate.co.za/payweb3/initiate.trans');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_NOBODY, false);
+    curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_HOST']);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsString);
+
+    //execute post
+    $result = curl_exec($ch);
+
+    //close connection
+    curl_close($ch);
+
+    return $result;
 }
 
 

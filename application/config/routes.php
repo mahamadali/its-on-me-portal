@@ -378,3 +378,9 @@ $route['brands/store'] = 'BrandsController/store';
 $route['brands/delete/(:any)'] = 'BrandsController/delete/$1';
 $route['brands/edit/(:any)'] = 'BrandsController/edit/$1';
 $route['brands/update'] = 'BrandsController/update';
+
+
+// PayGate  Payment 
+
+$route['api/paygate-payment/(:any)'] = 'api/General/paygateSuccess/$1';
+$route['api/paygate-notify'] = 'api/General/paygateNotify';
