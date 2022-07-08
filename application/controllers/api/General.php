@@ -559,9 +559,9 @@ public function getMerchantsByProvince_post()
       return $this->response(['status' => 'failed', 'message' => 'Missing Brand ID'], REST_Controller::HTTP_OK);
   }
 
+    $province = !empty($input['province_id']) ? $input['province_id']  : '';
 
-
-  $MerchantByProvince = $this->user->getMerchantByProvince($input['province_id'] , $input['brand_id']);
+  $MerchantByProvince = $this->user->getMerchantByProvince($province , $input['brand_id']);
    
 return $this->response(['status' => 'success', 'data' => $MerchantByProvince], REST_Controller::HTTP_OK);
 
