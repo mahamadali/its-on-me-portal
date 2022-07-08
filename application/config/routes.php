@@ -369,6 +369,7 @@ $route['api/user-transactions'] = 'api/General/userTransactions';
 $route['api/user-transaction-details'] = 'api/General/userTransactionDetails';
 $route['api/order-success-info'] = 'api/General/orderSuccessTransactionDetails';
 $route['api/user-gift-history'] = 'api/General/userGiftHistory';
+$route['api/get_merchants_by_province'] = 'api/General/getMerchantsByProvince';
 
 
 //Manage Brands

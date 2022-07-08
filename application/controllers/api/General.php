@@ -550,4 +550,19 @@ else
 return $this->response(['status' => 'success', 'data' => $GetUserGiftHistory], REST_Controller::HTTP_OK);
 
 }
+
+public function getMerchantsByProvince_post()
+{
+    $input = $this->input->post(); 
+
+    if(!isset($input['province_id'])) {
+      return $this->response(['status' => 'failed', 'message' => 'Missing Province ID'], REST_Controller::HTTP_OK);
+  }
+
+  $MerchantByProvince = $this->user->getMerchantByProvince($input['province_id']);
+   
+return $this->response(['status' => 'success', 'data' => $MerchantByProvince], REST_Controller::HTTP_OK);
+
+}
+
 }

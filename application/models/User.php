@@ -315,4 +315,13 @@ class User extends CI_Model
              return [];
         }
      }
+
+     public function getMerchantByProvince($id)  
+      {  
+           $this->db->select("*");  
+           $this->db->from('merchants');  
+           $this->db->where('province', $id);
+           $query = $this->db->get(); 
+            return $query->result_array();      
+      }
 }
