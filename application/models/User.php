@@ -316,11 +316,18 @@ class User extends CI_Model
         }
      }
 
-     public function getMerchantByProvince($id)  
+     public function getMerchantByProvince($province = '',$brand_id = '')  
       {  
            $this->db->select("*");  
            $this->db->from('merchants');  
-           $this->db->where('province', $id);
+           if(!empty($province))
+           {
+             $this->db->where('province', $province);
+           }
+           if(!empty($brand_id))
+           {
+            $this->db->where('brand_id', $brand_id);
+           }
            $query = $this->db->get(); 
             return $query->result_array();      
       }
