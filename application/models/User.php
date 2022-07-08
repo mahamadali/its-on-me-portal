@@ -318,7 +318,7 @@ class User extends CI_Model
 
      public function getMerchantByProvince($province = '',$brand_id = '')  
       {  
-           $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_profile');
+           $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as profile_picture');
            $this->db->from('merchants');  
            if(!empty($province))
            {
