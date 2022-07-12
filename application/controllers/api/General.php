@@ -80,9 +80,9 @@ public function paygateSuccess_get($id)
     {
         $getOrdersData = $this->getOrdersData($id);
 
-        $this->data['getOrdersData'] = $getOrdersData;
-        $this->data['page'] = "payment/index";
-       $this->load->view('structure',$this->data);   
+      /*  $this->data['getOrdersData'] = $getOrdersData;
+        $this->data['page'] = "payment/index";*/
+       $this->load->view('payment/index',array('getOrdersData' => $getOrdersData));   
 
         
     }
