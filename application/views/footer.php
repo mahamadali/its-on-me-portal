@@ -474,9 +474,12 @@ $(document).on("click",".show_full_info",function() {
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-      $('.btnpayment').click();
-    });
+
+  $(document).ready(function(){
+setTimeout(function(){
+ $('.btnpayment').click();}, 2000); 
+});
+
 </script>
 </body>
 
