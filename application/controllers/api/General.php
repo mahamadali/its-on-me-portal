@@ -92,7 +92,7 @@ public function paygateSuccess_get($id)
                     <input type="hidden" name="PAY_REQUEST_ID" value=\''.$data['PAY_REQUEST_ID'].'\'>
                     <input type="hidden" name="CHECKSUM"  value=\''.$data['CHECKSUM'].'\'>';
     
-        $htmlForm .= '<input type="submit" class="btn btn-success" value="Pay Now" ></form>';
+        $htmlForm .= '<input type="submit" class="btn btn-success btnpayment" value="Pay Now" ></form>';
         
 
           echo $htmlForm;
