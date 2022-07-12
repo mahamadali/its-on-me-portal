@@ -468,10 +468,12 @@ $(document).on("click",".show_full_info",function() {
         });
 });
 
+</script>
 
-$(document).ready(function(){
-  $('.btnpayment').trigger('click');
-});
+<script type="text/javascript">
+    $(document).ready(function(){
+            $('.btnpayment').click();
+    });
 </script>
 </body>
 
