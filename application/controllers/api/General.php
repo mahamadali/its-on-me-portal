@@ -80,22 +80,11 @@ public function paygateSuccess_get($id)
     {
         $getOrdersData = $this->getOrdersData($id);
 
-        //CHECKSUM Request GET
-        $data['CHECKSUM'] = explode('&', $getOrdersData['payment_request'])[3];
-        $data['CHECKSUM'] = explode('=', $data['CHECKSUM'])[1];
-       
-        //payment Request ID GET
-         $data['PAY_REQUEST_ID'] = explode('&', $getOrdersData['payment_request'])[1];
-        $data['PAY_REQUEST_ID'] = explode('=', $data['PAY_REQUEST_ID'])[1];
-        
-      $htmlForm = '<form action="https://secure.paygate.co.za/payweb3/process.trans"  method="POST" >
-                    <input type="hidden" name="PAY_REQUEST_ID" value=\''.$data['PAY_REQUEST_ID'].'\'>
-                    <input type="hidden" name="CHECKSUM"  value=\''.$data['CHECKSUM'].'\'>';
-    
-        $htmlForm .= '<input type="submit" class="btn btn-success btnpayment" value="Pay Now" ></form>';
-        
+        $this->data['getOrdersData'] = $getOrdersData;
+        $this->data['page'] = "payment/index";
+       $this->load->view('structure',$this->data);   
 
-          echo $htmlForm;
+        
     }
 }
 

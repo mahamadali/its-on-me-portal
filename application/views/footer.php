@@ -469,18 +469,7 @@ $(document).on("click",".show_full_info",function() {
 });
 
 </script>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
-<script type="text/javascript">
 
-  $(document).ready(function(){
-setTimeout(function(){
- $('.btnpayment').click();}, 2000); 
-});
-
-</script>
 </body>
 
 </html>
