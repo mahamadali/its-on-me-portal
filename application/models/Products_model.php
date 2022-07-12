@@ -426,9 +426,9 @@ class Products_model extends CI_Model
             return $query->result_array();
         }
 
-         public function searchByBrand($merchantName)
+       /*  public function searchByBrand($merchantName)
         {
-            /*if(empty($merchantName)) { return []; }*/
+            
             $this->db->select('`brands`.*,CONCAT("'.base_url().'", `brands`.logo) as brand_logo');
             if(!empty($merchantName))
             {
@@ -437,11 +437,11 @@ class Products_model extends CI_Model
             $this->db->order_by('brands.id', 'DESC');
             $query = $this->db->get('brands');
             return $query->result_array();
-        }
+        }*/
 
-     /*   public function searchByBrand($merchantName)
+        public function searchByBrand($merchantName)
         {
-     
+            /*if(empty($merchantName)) { return []; }*/
             $this->db->select('`merchants`.*,CONCAT("'.base_url().'", `merchants`.profile_picture) as merchant_image,merchants.is_super_merchant as is_super_merchant, provinces.name as province_name');
             $this->db->join('provinces', 'provinces.id=merchants.province');
             if(!empty($merchantName))
@@ -453,6 +453,6 @@ class Products_model extends CI_Model
             $query = $this->db->get('merchants');
             return $query->result_array();
         }
-*/     
+     
     
 }
