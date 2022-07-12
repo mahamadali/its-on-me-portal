@@ -361,9 +361,9 @@ class User extends CI_Model
 
       public function getPaymentStatus($paymentId)  
       {  
-           $this->db->select("status");  
+           $this->db->select("status,id");  
            $this->db->where('PAY_REQUEST_ID', $paymentId);  
            $query = $this->db->get('transactions'); 
-           return $query->row()->status;        
+           return $query->row();        
       }
 }
