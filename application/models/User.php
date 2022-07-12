@@ -248,7 +248,7 @@ class User extends CI_Model
     public function getSuccessTransactionData($id,$transaction_id) {
         $this->db->select('*');
          $this->db->where('user_id', $id);
-         $this->db->where('transaction_id', $transaction_id);
+         $this->db->where('id', $transaction_id);
          $query = $this->db->get('transactions');
         if($query->num_rows() > 0) {
             return $query->row();
