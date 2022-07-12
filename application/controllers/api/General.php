@@ -225,13 +225,13 @@ public function paygateNotify_post()
 
 public function generatePaymentLinkViaPaygate($data = '') {
 
-   $encryptionKey = 'k72=YA5N%g)cOjKZR+hu!c&az';
+   $encryptionKey = 'secret';
    $UserEmail = $this->userInfo($data['user_id']);
   
     $DateTime = new DateTime();
 
     $data = array(
-        'PAYGATE_ID'        => 1046782100017,
+        'PAYGATE_ID'        => 10011072130,
         'REFERENCE'         => 'pgtest_123456789',
         'AMOUNT'            => $data['price'] * 100,
         'CURRENCY'          => 'ZAR',
