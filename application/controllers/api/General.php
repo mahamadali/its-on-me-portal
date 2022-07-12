@@ -573,11 +573,12 @@ public function getBrandsByProvince_post()
 
     if(!isset($input['province_id'])) {
       return $this->response(['status' => 'failed', 'message' => 'Missing Province ID'], REST_Controller::HTTP_OK);
-  }
+    }
 
     $province = !empty($input['province_id']) ? $input['province_id']  : '';
+    $search_text = !empty($input['search_text']) ? $input['search_text']  : '';
 
-  $MerchantByProvince = $this->user->getMerchantByProvince($province);
+  $MerchantByProvince = $this->user->getBrandsByProvince($province, $search_text);
    
 return $this->response(['status' => 'success', 'data' => $MerchantByProvince], REST_Controller::HTTP_OK);
 

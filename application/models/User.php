@@ -331,4 +331,23 @@ class User extends CI_Model
            $query = $this->db->get(); 
             return $query->result_array();      
       }
+
+      public function getBrandsByProvince($province = '',$search_text = '')  
+      {  
+           $this->db->select('`merchants`.*, CONCAT("'.base_url().'", `merchants`.profile_picture) as profile_picture');
+           $this->db->from('merchants');  
+           if(!empty($province))
+           {
+             $this->db->where('province', $province);
+           }
+           if(!empty($search_text))
+           {
+            $this->db->group_start();
+            $this->db->where('username LIKE ', '%'.$search_text.'%');
+            $this->db->or_where('bio LIKE ', '%'.$search_text.'%');
+            $this->db->group_end();
+           }
+           $query = $this->db->get(); 
+            return $query->result_array();      
+      }
 }
