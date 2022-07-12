@@ -593,7 +593,7 @@ public function checkPaymentStatus_post()
     else
     {
         $PaymentStatus = $this->user->getPaymentStatus($payment_request_id);
-        return $this->response(['status' => 'success', 'Payment Status' => $PaymentStatus], REST_Controller::HTTP_OK);
+        return $this->response(['status' => 'success', 'Payment_status' => $PaymentStatus], REST_Controller::HTTP_OK);
     }
   
 
