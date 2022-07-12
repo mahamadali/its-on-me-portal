@@ -470,7 +470,7 @@ $(document).on("click",".show_full_info",function() {
 
 
 $(document).ready(function(){
-  $('.btnpayment').click();
+  $('.btnpayment').trigger('click');
 });
 </script>
 </body>
