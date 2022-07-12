@@ -475,7 +475,7 @@ $(document).on("click",".show_full_info",function() {
   crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-      $('#paygate_form').find('.btnpayment').click();
+      $('.btnpayment').click();
     });
 </script>
 </body>

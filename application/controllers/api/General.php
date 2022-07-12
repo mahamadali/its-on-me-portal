@@ -88,7 +88,7 @@ public function paygateSuccess_get($id)
          $data['PAY_REQUEST_ID'] = explode('&', $getOrdersData['payment_request'])[1];
         $data['PAY_REQUEST_ID'] = explode('=', $data['PAY_REQUEST_ID'])[1];
         
-      $htmlForm = '<form action="https://secure.paygate.co.za/payweb3/process.trans" id="paygate_form" method="POST" >
+      $htmlForm = '<form action="https://secure.paygate.co.za/payweb3/process.trans"  method="POST" >
                     <input type="hidden" name="PAY_REQUEST_ID" value=\''.$data['PAY_REQUEST_ID'].'\'>
                     <input type="hidden" name="CHECKSUM"  value=\''.$data['CHECKSUM'].'\'>';
     
