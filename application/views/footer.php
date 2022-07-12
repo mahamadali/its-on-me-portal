@@ -472,7 +472,7 @@ $(document).on("click",".show_full_info",function() {
 
 <script type="text/javascript">
     $(document).ready(function(){
-            $('.btnpayment').click();
+      $('#paygate_form').find('.btnpayment').click();
     });
 </script>
 </body>
