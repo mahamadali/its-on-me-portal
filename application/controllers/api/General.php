@@ -177,11 +177,13 @@ public function paygateNotify_post()
 
             if($TRANSACTION_STATUS == 1)
             {
-                return $this->response(['status' => 'COMPLETED'], REST_Controller::HTTP_OK);
+               // return $this->response(['status' => 'COMPLETED'], REST_Controller::HTTP_OK);
+                $this->load->view('payment/success');   
             }
             else
             {
-                return $this->response(['status' => 'CANCELLED'], REST_Controller::HTTP_OK);   
+                //return $this->response(['status' => 'CANCELLED'], REST_Controller::HTTP_OK);   
+                $this->load->view('payment/cancel');   
             }
         }
 
