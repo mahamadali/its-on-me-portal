@@ -575,4 +575,28 @@ return $this->response(['status' => 'success', 'data' => $MerchantByProvince], R
 
 }
 
+public function checkPaymentStatus_post()
+{
+    $input = $this->input->post(); 
+
+    if(!isset($input['payment_request_id'])) {
+      return $this->response(['status' => 'failed', 'message' => 'Payment Request ID Missing'], REST_Controller::HTTP_OK);
+  }
+
+    $payment_request_id = !empty($input['payment_request_id']) ? $input['payment_request_id']  : '';
+
+    $checkUserExist = $this->user->check_payment_status($payment_request_id);
+    if(empty($checkUserExist))
+    {
+        return $this->response(['status' => 'failed', 'data' => 'Invalid Payment Request ID'], REST_Controller::HTTP_OK);
+    }
+    else
+    {
+        $PaymentStatus = $this->user->getPaymentStatus($payment_request_id);
+        return $this->response(['status' => 'success', 'Payment Status' => $PaymentStatus], REST_Controller::HTTP_OK);
+    }
+  
+
+}
+
 }

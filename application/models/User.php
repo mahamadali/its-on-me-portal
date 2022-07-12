@@ -350,4 +350,20 @@ class User extends CI_Model
            $query = $this->db->get(); 
             return $query->result_array();      
       }
+
+     public function check_payment_status($paymentId)  
+      {  
+           $this->db->select("*");  
+           $this->db->where('PAY_REQUEST_ID', $paymentId);  
+           $query = $this->db->get('transactions'); 
+           return $query->row();        
+      }
+
+      public function getPaymentStatus($paymentId)  
+      {  
+           $this->db->select("status");  
+           $this->db->where('PAY_REQUEST_ID', $paymentId);  
+           $query = $this->db->get('transactions'); 
+           return $query->row()->status;        
+      }
 }
