@@ -26,9 +26,7 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-  setTimeout(function(){
-   $('.btnpayment').click();
-  }, 2000); 
+ $('.btnpayment').click();
 });
 
 </script>
