@@ -503,7 +503,7 @@ public function orderSuccessTransactionDetails_post()
   if(!empty($getUserSuccessTransactions->menu_items))
   {
     $new_data = json_decode($getUserSuccessTransactions->menu_items);
-        print_r($productDetail);exit();
+        print_r($new_data);exit();
     $getUserproduct = [] ;
     foreach ($new_data as $key => $value) {
         $productDetail = $this->user->get_product_item_data($value->product_id);
