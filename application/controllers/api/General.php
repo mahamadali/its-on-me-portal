@@ -506,6 +506,7 @@ public function orderSuccessTransactionDetails_post()
     $getUserproduct = [] ;
     foreach ($new_data as $key => $value) {
         $productDetail = $this->user->get_product_item_data($value->product_id);
+        print_r($productDetail);exit();
         $merchant_details = $this->merchant->getOne($productDetail->merchant_id);
         $getUserproduct[$key]['product_id'] = $productDetail->id;
         $getUserproduct[$key]['product_name'] = $productDetail->product_name;
