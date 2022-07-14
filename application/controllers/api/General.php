@@ -216,13 +216,26 @@ public function paygateNotify_post()
 
 public function generatePaymentLinkViaPaygate($data = '') {
 
-   $encryptionKey = 'secret';
+   //$encryptionKey = 'secret';
+   $encryptionKey = 'k72=YA5N%g)cOjKZR+hu!c&az';
    $UserEmail = $this->userInfo($data['user_id']);
   
     $DateTime = new DateTime();
 
-    $data = array(
+   /* $data = array(
         'PAYGATE_ID'        => 10011072130,
+        'REFERENCE'         => 'pgtest_123456789',
+        'AMOUNT'            => $data['price'] * 100,
+        'CURRENCY'          => 'ZAR',
+        'RETURN_URL'        => 'https://itsonme.co.za/its-on-me-portal/api/paygate-notify',
+        'TRANSACTION_DATE'  => $DateTime->format('Y-m-d H:i:s'),
+        'LOCALE'            => 'en-za',
+        'COUNTRY'           => 'ZAF',
+        'EMAIL'             => $UserEmail['email'],
+    ); */
+
+     $data = array(
+        'PAYGATE_ID'        => 1046782100017,
         'REFERENCE'         => 'pgtest_123456789',
         'AMOUNT'            => $data['price'] * 100,
         'CURRENCY'          => 'ZAR',
