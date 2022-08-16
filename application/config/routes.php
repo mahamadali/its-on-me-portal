@@ -374,6 +374,10 @@ $route['api/get_brands_by_province'] = 'api/General/getBrandsByProvince';
 $route['api/check_payment_status'] = 'api/General/checkPaymentStatus';
 
 
+// DELETE USER
+
+$route['api/delete_user'] = 'api/Auth/deleteUser';
+
 //Manage Brands
 $route['brands'] = 'BrandsController';
 $route['brands/add'] = 'BrandsController/add';

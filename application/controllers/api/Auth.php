@@ -268,5 +268,27 @@ class Auth extends REST_Controller {
             $this->response(['status' => 'failed', 'message' => 'Incorrect login credentials!'], REST_Controller::HTTP_OK);
         }
     }
+
+    public function deleteUser_post()
+    {
+         $input = $this->input->post();
+         if(!isset($input['user_id'])) {
+         return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
+        }
+         $checkUserExist = $this->user->check_user_exist($input['user_id']);
+          if(empty($checkUserExist)) {
+         return $this->response(['status' => 'failed', 'message' => 'Invalid User ID'], REST_Controller::HTTP_OK);
+        }
+          $this->user->delete_data('inquiries','user_id',$input['user_id']);
+          $this->user->delete_data('transactions','user_id',$input['user_id']);
+          $this->user->delete_data('user_device_tokens','user_id',$input['user_id']);
+          $this->user->delete_data('user_notifications','user_id',$input['user_id']);
+          $deleted_id = $this->user->delete_data('users','id',$input['user_id']);
+         if($deleted_id) {
+            $this->response(['status' => 'success', 'message' => 'User Deleted successfully' ,'user_id' => $input['user_id']], REST_Controller::HTTP_OK);
+        } else {
+            $this->response(['status' => 'failed', 'message' => 'Something Went wrong!'], REST_Controller::HTTP_OK);
+        }
+    }
     	
 }
