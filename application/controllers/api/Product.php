@@ -27,13 +27,13 @@ class Product extends REST_Controller {
     public function categories_post()
     {
         $input = $this->input->post();
-        if(!isset($input['user_id'])) {
+        /*if(!isset($input['user_id'])) {
          return $this->response(['status' => 'failed', 'message' => 'Missing User ID'], REST_Controller::HTTP_OK);
         }
         $user = $this->user->findByColumn('id', $input['user_id']);
         if(empty($user)) {
             return $this->response(['status' => 'failed', 'message' => 'You do not have permission'], REST_Controller::HTTP_OK);
-        }
+        }*/
         $response = $this->db->get('categories')->result_array();
         $this->response(['status' => 'success', 'data' => $response], REST_Controller::HTTP_OK);
     }
