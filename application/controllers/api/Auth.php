@@ -82,12 +82,12 @@ class Auth extends REST_Controller {
             $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
 
             if(!empty($getUserTransactions)) {
+                    echo "<pre>"; print_r($getUserTransactions);exit();
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
                     $senderName = $this->user->getUserById($transaction->user_id);
                    $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
 
-                    echo "<pre>"; print_r($message);exit();
                    // $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your “It’s on me” CODE is ". $transaction->code ."";
 
                     $title = "Transaction gift code";
