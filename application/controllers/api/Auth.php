@@ -113,7 +113,15 @@ class Auth extends REST_Controller {
                    ];
 
                    $this->user->insert_data_getid($user_notification_data, 'user_notifications');
-                   $Smsmessage = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
+                   if(!empty($senderName))
+                   {
+                          $Smsmessage = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
+                   }
+                   else
+                   {
+                      $Smsmessage = '';
+                   }
+                  
                    sendSMS($input['phoneNumber'], $Smsmessage);
                 }
             }
