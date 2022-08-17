@@ -76,7 +76,7 @@ class Auth extends REST_Controller {
         ];
         
         $id = $this->user->insert_data_getid($data, 'users');
-       
+
         if($id) {
 
             $getUserTransactions = $this->merchant->getNewUserTransactionsAvailable($input['phoneNumber']);
@@ -85,8 +85,14 @@ class Auth extends REST_Controller {
                 $getUserTokens = $this->user->getTokens($id);
                 foreach($getUserTransactions as $transaction) {
                     $senderName = $this->user->getUserById($transaction->user_id);
-                    echo "<pre>"; print_r($senderName);exit();
-                   $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
+                   if(!empty($senderName))
+                   {
+                         $message = "Hey ".$input['firstname']." ".$input['surname']." you've received a gift from ".$senderName.", Your “It’s on me” CODE is ". $transaction->code ."";
+                   }
+                   else
+                   {
+                      $message = '';
+                   }
 
                    // $message = "Hey ".$input['firstname']." ".$input['surname'].", Your order is on me. Your “It’s on me” CODE is ". $transaction->code ."";
 
