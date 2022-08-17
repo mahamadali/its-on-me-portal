@@ -75,6 +75,7 @@ class Auth extends REST_Controller {
             'province' => $input['province']
         ];
         
+        echo "<pre>"; print_r($data);exit();
         $id = $this->user->insert_data_getid($data, 'users');
         if($id) {
 
